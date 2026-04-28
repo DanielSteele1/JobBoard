@@ -4,9 +4,9 @@ function Dashboard() {
 
   return (
 
-    <section>
+    <section className="Dashboard">
       
-      Dashboard
+     hioihoi
 
     </section>
   )
