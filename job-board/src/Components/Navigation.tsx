@@ -8,28 +8,29 @@ interface NavProps {
     isLightOn: Boolean;
 }
 
-function Navigation({isLightOn, toggleLight}: NavProps) {
+function Navigation({ isLightOn, toggleLight }: NavProps) {
 
     return (
+        <section className="Navigation-container">
+            <div className="Navigation">
 
-        <section className="Navigation">
-
-            <div className="nav-icon">
-                Dan's Job Board
-            </div>
-
-            <div className="nav-sections">
-
-                <div className="nav-link">
-                    <TbBlocks/> Dashboard
+                <div className="nav-icon">
+                    Dan's Job Board
                 </div>
-                <div className="nav-link">
-                    <BsPerson/> Login
-                </div>  
-                <div className="nav-link" onClick={toggleLight}>
-                
-                   {isLightOn ? <TbSun /> : <BiMoon/>}
 
+                <div className="nav-sections">
+
+                    <div className="nav-link">
+                        <TbBlocks /> Dashboard
+                    </div>
+                    <div className="nav-link">
+                        <BsPerson /> Login
+                    </div>
+                    <div className="nav-link" onClick={toggleLight}>
+
+                        {isLightOn ? <TbSun /> : <BiMoon />}
+
+                    </div>
                 </div>
             </div>
 
