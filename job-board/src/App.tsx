@@ -3,10 +3,10 @@ import './App.css';
 import '@mantine/core/styles.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Navigation from './Components/Navigation.tsx';
 import Dashboard from './Components/Dashboard.tsx';
 import Footer from './Components/Footer.tsx';
 import NotFound from './Components/NotFound.tsx';
+import Sidebar from './Components/Sidebar.tsx';
 
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -17,32 +17,33 @@ function App() {
   const [isLightOn, setLightOn] = useState(() => {
 
     const savedTheme = localStorage.getItem("theme");
-    return savedTheme ? savedTheme === 'light': false;
+    return savedTheme ? savedTheme === 'light' : false;
 
   });
 
-   const toggleLight: React.MouseEventHandler<HTMLDivElement> = () => {
+  const toggleLight: React.MouseEventHandler<HTMLButtonElement> = () => {
     setLightOn(prev => !prev);
   };
 
   useEffect(() => {
 
     const theme = isLightOn ? "light" : "dark";
-    
+
     document.documentElement.setAttribute(
       "data-mantine-color-scheme", theme,
     );
 
     localStorage.setItem("theme", theme);
 
-  
+
   }), ([isLightOn, setLightOn]);
 
   return (
 
     <MantineProvider data-mantine-color-scheme={isLightOn ? 'dark' : 'light'}>
       <BrowserRouter>
-        <Navigation isLightOn={isLightOn} toggleLight={toggleLight} />
+
+        <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
 
         <Routes>
           <Route path='/' element={<Dashboard />} />

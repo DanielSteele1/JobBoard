@@ -4,10 +4,26 @@ import { BiSearch } from "react-icons/bi";
 import DashboardCard from "../Components/DashboardCard";
 import { useEffect, useState } from "react";
 
+import useStore from '../State/ZustandStore.tsx';
+
 function Dashboard() {
 
+  const setLoading = useStore((state: any) => state.setLoading);
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResult, setSearchResult] = useState<any>('null');
+  const [searchResult, setSearchResult] = useState<any>(null);
+
+  //loading state
+
+  useEffect(() => {
+
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+
+  }, []);
+
+  // get search results
 
   useEffect(() => {
 
@@ -32,6 +48,7 @@ function Dashboard() {
     getGenericResults();
 
   }, []);
+
 
   async function getSearchResults() {
 
@@ -69,23 +86,18 @@ function Dashboard() {
           </div>
 
           <form className="search-input" onSubmit={handleSubmit}>
-            <input type="text" className="input" onChange={(e) => setSearchTerm(e.target.value)} />
+            <input
+              type="text"
+              className="input"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search for a Job title.."
+            />
 
             <input
               type="text"
               className="location-input"
               color='teal.7'
-            />
-
-            <select
-              className="contract-input"
-              color='teal.7'
-            />
-
-            <select
-              className="experience-input"
-              
-              color='teal.7' 
+              placeholder="Search for a location.."
             />
 
             <Button
@@ -97,15 +109,45 @@ function Dashboard() {
           </form>
         </div>
 
+        <div className="search-filters-container">
+          <span className="heading"> Filter Results by:</span>
+          <div className="search-filters">
+
+            <div className="input-container">
+              <div id="big-input">
+                <select className="experience-input">
+
+                </select>
+
+                <select className="contract-input">
+
+                </select>
+
+              </div>
+            </div>
+
+            <div id="small-input">
+
+              <select className="pay-input">
+
+              </select>
+
+              <select className="date-input">
+
+              </select>
+            </div>
+          </div>
+        </div>
+
         <div className="dashboard-results">
           {searchResult?.results?.map((job: any) => (
             <DashboardCard key={job.id} jobData={job} />
-          ))};
+          ))}
         </div>
 
       </div>
-
     </section>
+
   )
 }
 

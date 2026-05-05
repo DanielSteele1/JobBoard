@@ -1,8 +1,14 @@
-import { Button } from "@mantine/core";
+import { Button, Skeleton } from "@mantine/core";
 import { BiBuilding, BiPlus } from "react-icons/bi";
 import { BsFillClockFill } from "react-icons/bs";
 import { FaChartLine, FaHandshake, FaLocationDot } from "react-icons/fa6";
 import { PiNewspaper } from "react-icons/pi";
+
+import useStore from "../State/ZustandStore";
+
+import { IoIosArrowDown } from "react-icons/io";
+//import { IoIosArrowUp } from "react-icons/io";
+
 interface CardProps {
 
   jobData: {
@@ -24,59 +30,97 @@ interface CardProps {
 }
 
 function DashboardCard({ jobData }: CardProps) {
+
+  const isLoading = useStore((state: any) => state.isLoading);
+
   return (
-    <section className="dashboard-card">
-      < div className="job-title">
-        {jobData.title}
-      </div>
+    <section>
+      {isLoading ?
+        <div className="Skeleton">
 
-      <div className="job-top-details">
-        <div className="job-company_name">
-          <BiBuilding /> {jobData.company?.display_name}
+          <div className="dashboard-card">
+            <div className="job-title" >
+
+            </div >
+
+            <div className="job-description">
+              <Skeleton className="Skeleton" />
+            </div>
+
+            <div className="buttons-tray">
+              <div className="button">
+                <Skeleton className="skeleton-button" />
+              </div>
+
+              <div className="button">
+                <Skeleton className="skeleton-button" />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="job-company_name">
-          <FaChartLine /> £{jobData.salary_max}
+        :
+        <div className="dashboard-card">
+          < div className="job-title" >
+            {jobData.title}
+          </div >
+
+          <div className="job-top-details">
+            <div className="job-company_name">
+              <BiBuilding /> {jobData.company?.display_name}
+            </div>
+
+            <div className="job-company_name">
+              <FaChartLine /> £{jobData.salary_max}
+            </div>
+
+            <div className="job-company_name">
+              <FaHandshake /> {jobData.contract_type}
+            </div>
+
+            <div className="job-location">
+              <FaLocationDot /> {jobData.location?.display_name}
+            </div>
+
+            <div className="job-created">
+              <BsFillClockFill /> {jobData.created}
+            </div>
+
+          </div>
+          <div className="job-description">
+            {jobData.description}
+          </div>
+
+          <div className="buttons-tray">
+            <div className="button">
+              <Button className="apply-button" color="teal.7">
+                <a href={jobData?.redirect_url}>
+                  <PiNewspaper /> Apply
+                </a>
+              </Button>
+            </div>
+
+            <div className="button">
+              <Button className="save-job-button" color="teal.7">
+                <a>
+                <IoIosArrowDown/> Read More
+              </a>
+            </Button>
+          </div>
+
+          <div className="button">
+            <Button className="save-job-button" color="teal.7">
+              <a>
+                <BiPlus /> Save job
+              </a>
+            </Button>
+          </div>
+        </div>
         </div>
 
-        <div className="job-company_name">
-          <FaHandshake /> {jobData.contract_type}
-        </div>
+      }
 
-        <div className="job-location">
-          <FaLocationDot /> {jobData.location?.display_name}
-        </div>
-
-        <div className="job-created">
-          <BsFillClockFill /> {jobData.created}
-        </div>
-
-      </div>
-      <div className="job-description">
-        {jobData.description}
-      </div>
-
-      <div className="buttons-tray">
-        <div className="button">
-          <Button className="apply-button" color="teal.7">
-            <a href={jobData?.redirect_url}>
-              <PiNewspaper /> Apply
-            </a>
-          </Button>
-        </div>
-
-        <div className="button">
-          <Button className="save-job-button" color="teal.7">
-            <a>
-              <BiPlus /> Save job
-            </a>
-          </Button>
-        </div>
-      </div>
-
-    </section>
-
+    </section >
   )
 }
-
 export default DashboardCard;

@@ -50,7 +50,7 @@
   /* Almost white */
   --background-secondary: #f4f4f5;
   /* Zinc 100 - very balanced */
-  --text-color: #09090b;
+  --text-color: #19191b;
   /* Deep Zinc black */
   --border-color: #e4e4e7;
   --accent: #0ca678;
@@ -64,6 +64,9 @@ a {
 
 .Navigation-container {
   display: flex;
+  position: fixed;
+  overflow-y: auto;
+  z-index: 1000;
   width: 100%;
   margin: 0 auto;
   flex-direction: row;
@@ -85,6 +88,15 @@ a {
   color: var(--text-color);
 }
 
+.sidebar-icon {
+  display: flex;
+  width: 80%;
+  flex-direction: row;
+  font-size: 1.4rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .nav-sections {
   display: flex;
   height: 45px;
@@ -93,22 +105,26 @@ a {
   margin: 10px;
 }
 
-.nav-link {
+.sidebar-link {
   display: flex;
+  height: 60px;
+  width: 100%;
   flex-direction: row;
-  padding: 10px;
   align-self: center;
   justify-content: center;
 }
 
-.nav-link svg {
+
+.nav-link svg,
+.sidebar-link svg {
   align-self: center;
-  justify-content: center;
-  font-size: 23px;
+  justify-content: flex-start;
+  font-size: 25px;
   margin-right: 10px;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.sidebar-link:hover {
   color: var(--accent);
   cursor: pointer;
   transition: 0.3s ease-in-out;
@@ -137,6 +153,7 @@ body {
   margin: 0 auto;
   align-items: flex-start;
   justify-content: center;
+  margin-top: 100px;
 }
 
 .dashboard-top {
@@ -149,7 +166,7 @@ body {
   background-color: var(--background-secondary);
   color: var(--text-color);
   border-radius: 12px;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .dashboard-info {
@@ -200,14 +217,48 @@ body {
   margin: 10px;
 }
 
-.input,
-.location-input {
+.heading {
   display: flex;
+  padding: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.0rem;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-filters-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-secondary);
+  border-radius: 12px;
+  height: fit-content;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.search-filters {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between
+}
+
+.input,
+.location-input,
+.date-input,
+.pay-input {
+  display: flex;
+  justify-content: space-around;
   color: var(--accent);
   border: transparent 2px solid;
   height: 45px;
   margin: 10px;
-  width: 80%;
+  width: 40%;
   border-radius: 12px;
   background-color: var(--background-surface);
   padding: 10px;
@@ -216,12 +267,26 @@ body {
   font-weight: 400;
 }
 
+#small-input,
+#big-input {
+  display: flex;
+  flex-direction: row;
+}
+
+#small-input {
+  width: 30%;
+}
+
+.date-input,
+.pay-input {
+  width: 100%;
+}
+
 .input:focus,
 .location-input:focus {
 
   border-color: var(--accent);
   outline: none;
-
 }
 
 .contract-input,
@@ -238,7 +303,6 @@ body {
   font-family: 'Outfit', sans-serif;
   font-size: 1.0rem;
   font-weight: 400;
-
 }
 
 .Footer {
@@ -333,16 +397,220 @@ body {
   flex-direction: row;
 }
 
+#highlight {
+  color: var(--accent);
+}
+
+.Skeleton {
+  display: flex;
+  width: 100%;
+  height: 250px;
+  margin-top: 10px;
+}
+
+.skeleton-button {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  margin: 10px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh; 
+  width: 200px; 
+  background-color: var(--background-secondary);
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 24px 12px; 
+  z-index: 100;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar.collapsed {
+  width: 85px;
+}
+
+.sidebar-top {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo Styling */
+.sidebar-icon {
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-bottom: 40px;
+  white-space: nowrap;
+}
+
+.profile-pic {
+  display: flex;
+  height: 100px;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: #0ca678; 
+  border-radius: 50px;
+  color: white;
+  transition: all 0.3s ease;
+  font-size: 1.3rem;;
+}
+
+.sidebar.collapsed .profile-pic {
+  height: 45px;
+  width: 45px;
+  margin-bottom: 20px;
+}
+
+.sidebar-heading {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.0rem;
+}
+
+.sidebar-links {
+  display: inline-flex;
+  width: 100%;
+  height: 500px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar.collapsed .sidebar-link {
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
+  justify-content: center;
+}
+
+.sidebar-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 8px 8px;
+  margin-top: 10px;
+  color: var(--text-color);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-size: 1.3rem;
+}
+
+.sidebar-link:hover {
+  color: var(--accent);
+}
+
+.sidebar-link svg {
+  font-size: 25px;
+  min-width: 25px;
+}
+
+.sidebar.collapsed .sidebar-link svg {
+  margin-right: 0;
+}
+
+.sidebar-buttons {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  background-color: #0ca678;
+  justify-content: space-evenly;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 20px;
+  transition: flex-direction 0.3s;
+}
+
+.sidebar.collapsed .sidebar-buttons {
+  flex-direction: column;
+  height: 50px;
+  width: 100%;
+}
+
+.collapse-button, .theme-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar.collapsed .collapse-button, 
+.sidebar.collapsed .theme-button {
+  background-color: #0ca678;
+  border-radius: 10px;
+  font-size: 1.0rem;
+}
+
+.display-none {
+  display: none;
+}
+
 @media(min-width: 300px) and (max-width: 750px) {
 
   .dashboard {
     width: 80%;
-
   }
 
   .dashboard-card {
     width: fit-content;
     height: 280px;
+    width: 100%;
+  }
+
+  .job-description {
+    max-height: 120px;
+    overflow-y: hidden;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .buttons-tray {
+    height: fit-content;
+    width: 100%;
+    margin: 10px;
+  }
+
+  .search-filter,
+  #big-input {
+    flex-direction: column;
+  }
+
+}
+
+
+@media(min-width: 750px) and (max-width: 1000px) {
+
+  .dashboard {
+    width: 80%;
+  }
+
+  .dashboard-card {
+    width: fit-content;
+    height: 280px;
+    width: 100%;
   }
 
   .job-description {
