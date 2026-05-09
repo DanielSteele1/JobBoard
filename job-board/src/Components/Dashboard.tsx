@@ -19,7 +19,7 @@ interface Job {
   salary_max: string,
   salary_min: string,
   contract_type: string,
-  time_posted: string,
+  created: string;
 
 }
 
@@ -54,26 +54,73 @@ function Dashboard({ }: Job) {
 
   }, []);
 
+
+
   // get search results
+
+
 
   //filtered results 
 
   const filteredJobs = searchResult?.results?.filter((job: Job) => {
+
+    const currentTime = Date.now(); // current time
+    const jobPostedTime = new Date(job.created).getTime(); // time of job posting 
+
+    const JobAge = currentTime - jobPostedTime;
+    const DayLimit = 24 * 60 * 60 * 1000; // this is 24hs in ms
+    const WeekLimit = 7 * 24 * 60 * 60 * 1000;
+    const MonthLimit = 30 * 24 * 60 * 60 * 1000;
+
+    if (filters.time_posted === 'In the last 24hrs') {
+
+      if (JobAge < DayLimit) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
+    }
+
+    if (filters.time_posted === 'In the last Week') {
+
+      if (JobAge < WeekLimit) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    if (filters.time_posted === 'In the last Month') {
+
+      if (JobAge < MonthLimit) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
+    }
+
 
     if (filters.contract_type) {
       const isMatch = job.contract_type?.toLowerCase() === filters.contract_type.toLowerCase();
       if (!isMatch) return false;
     }
 
+    // check for time create
+
     if (filters.time_posted) {
-      const isMatch = job.time_posted;
+      const isMatch = job.created;
       if (!isMatch) return true;
     }
 
     if (filters.experience_level === 'Junior') {
 
-      const isTitle = job.title?.toLowerCase().includes('junior') && job.title.toLowerCase().includes('trainee');
-      const isDesc = job.description?.toLowerCase().includes('junior') && job.description.toLowerCase().includes('trainee');
+      const isTitle = job.title?.toLowerCase().includes('junior') || job.title.toLowerCase().includes('trainee');
+      const isDesc = job.description?.toLowerCase().includes('junior') || job.description.toLowerCase().includes('trainee');
 
       if (!isTitle && !isDesc) return false;
 
@@ -104,7 +151,8 @@ function Dashboard({ }: Job) {
 
       if (!isTitle && !isDesc) return false;
 
-    } 
+    }
+
 
     if (filterRemoteOnly) {
 
@@ -115,7 +163,6 @@ function Dashboard({ }: Job) {
 
       if (!isDesc && !isTitle) return false;
     }
-
 
 
 
@@ -246,7 +293,8 @@ function Dashboard({ }: Job) {
               clearable
               value={filters.time_posted}
               color='teal.7'
-              data={['last 24 Hours', 'In the last week', 'In the last month']}
+              data={['In the last 24hrs', 'In the last Week', 'In the last Month']}
+              onChange={(value) => setfilters({ ...filters, time_posted: value || '' })}
             >
 
             </Select>

@@ -53,7 +53,7 @@ function App() {
           <Route path='/' element={<Dashboard id={''} title={''} location={{
             display_name: '',
             area: undefined
-          }} description={''} salary_max={''} salary_min={''} contract_type={''} time_posted={''} />} />
+          }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
 
           <Route path='*' element={<NotFound />} />
         </Routes>

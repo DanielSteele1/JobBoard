@@ -28,6 +28,14 @@ interface CardProps {
 function DashboardCard({ jobData }: CardProps) {
 
   const isLoading = useStore((state: any) => state.isLoading);
+
+  const JobDate = new Intl.DateTimeFormat('en-GB', {
+
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    hour12: false
+
+  }).format(new Date(jobData.created));
   
   return (
     <section>
@@ -79,7 +87,7 @@ function DashboardCard({ jobData }: CardProps) {
             </div>
 
             <div className="job-created">
-              <BsFillClockFill /> {jobData.created}
+              <BsFillClockFill /> {JobDate}
             </div>
 
           </div>
