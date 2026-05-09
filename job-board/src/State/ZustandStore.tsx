@@ -6,7 +6,7 @@ const useStore = create((set) => ({
     setLoading: (data: boolean) => set({ isLoading: data }),
 
     savedJobsIds: String,
-
+    
 }));
 
 export default useStore;

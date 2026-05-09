@@ -4,13 +4,15 @@ import '@mantine/core/styles.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Dashboard from './Components/Dashboard.tsx';
-import Footer from './Components/Footer.tsx';
 import NotFound from './Components/NotFound.tsx';
 import Sidebar from './Components/Sidebar.tsx';
 
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { MantineProvider } from '@mantine/core';
+import { Analytics } from '@vercel/analytics/react';
+import Profile from './Components/Profile.tsx';
+import YourJobs from './Components/YourJobs.tsx';
 
 function App() {
 
@@ -46,11 +48,17 @@ function App() {
         <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
 
         <Routes>
-          <Route path='/' element={<Dashboard />} />
+          <Route path='/Profile' element={<Profile />} />
+          <Route path='/YourJobs' element={<YourJobs />} />
+          <Route path='/' element={<Dashboard id={''} title={''} location={{
+            display_name: '',
+            area: undefined
+          }} description={''} salary_max={''} salary_min={''} contract_type={''} time_posted={''} />} />
+
           <Route path='*' element={<NotFound />} />
         </Routes>
 
-        <Footer />
+        <Analytics />
       </BrowserRouter>
     </MantineProvider>
 

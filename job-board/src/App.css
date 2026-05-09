@@ -2,20 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
-
-/*** Works on common browsers ***/
 ::selection {
   background-color: var(--accent);
   color: #fff;
 }
 
-/*** Mozilla based browsers ***/
 ::-moz-selection {
   background-color: var(--accent);
   color: #fff;
 }
 
-/***For Other Browsers ***/
 ::-o-selection {
   background-color: var(--accent);
   color: #fff;
@@ -26,12 +22,10 @@
   color: #fff;
 }
 
-/*** For Webkit ***/
 ::-webkit-selection {
   background-color: var(--accent);
   color: #fff;
 }
-
 
 [data-mantine-color-scheme="dark"],
 :root[data-mantine-color-scheme="dark"] {
@@ -40,21 +34,24 @@
   --text-color: #fafafa;
   --border-color: #27272a;
   --accent: #0ca678;
-  --background-surface: #2e2e2e;
+  --background-surface: #111111;
 }
 
-/* Airy, Neutral Light Mode */
 [data-mantine-color-scheme="light"],
 :root[data-mantine-color-scheme="light"] {
   --background: #fdfdfd;
-  /* Almost white */
   --background-secondary: #f4f4f5;
-  /* Zinc 100 - very balanced */
   --text-color: #19191b;
-  /* Deep Zinc black */
   --border-color: #e4e4e7;
   --accent: #0ca678;
-  --background-surface: #ffffff;
+  --background-surface: #f4f4f5;
+}
+
+
+#highlight{
+
+  color: var(--accent) !important;
+  font-weight: 600;
 }
 
 a {
@@ -227,6 +224,10 @@ body {
 .input-container {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100%;
+  height: 70px;
 }
 
 .search-filters-container {
@@ -240,13 +241,6 @@ body {
   justify-content: center;
 }
 
-.search-filters {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between
-}
 
 .input,
 .location-input,
@@ -290,20 +284,51 @@ body {
 }
 
 .contract-input,
+.experience-input,
 .experience-input {
   display: flex;
-  color: var(--accent);
-  border: transparent 2px solid;
-  height: 45px;
-  margin: 10px;
-  width: 250px;
-  border-radius: 12px;
-  background-color: var(--background-surface);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   padding: 10px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.0rem;
-  font-weight: 400;
 }
+
+.indicators{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100px;
+  justify-content: space-between;
+  align-items: flex-end;
+
+}
+
+.results-amount {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding-left: 10px;
+  justify-content: flex-start;
+}
+
+.results-isRemote {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  color:var(--accent);
+}
+
+.results-isRemote svg{
+  display: flex;
+
+  margin-right: 10px;
+}
+.remote-only,
+.clear-filters {
+  display: flex;
+  margin: 10px;
+}
+
 
 .Footer {
   display: flex;
@@ -321,7 +346,63 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: fit-content;
+  height: fit-content;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 12px;
+  margin-top: 10px;
+  background-color: var(--background-secondary);
+}
+
+.notFound-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100dvh;
+}
+
+.notFound{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: 300px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.error-message{
+  display: flex;
+  height: fit-content;
+  padding: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  margin: 10px;
+}
+
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  margin-top: 10px;
+  font-size: 1.3rem;
+  background-color: var(--background-secondary);
+}
+
+.dashboard-card-collapsed {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
   align-items: flex-start;
   justify-content: center;
   padding: 10px;
@@ -369,6 +450,18 @@ body {
   font-size: 1.2rem;
   padding: 10px;
   color: var(--accent);
+}
+
+.job-description-collapsed {
+  height: fit-content;
+  width: fit-cotnent;
+  font-size: 0.9rem;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
 }
 
 .job-location,
@@ -420,22 +513,22 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100vh; 
-  width: 200px; 
-  background-color: var(--background-secondary);
+  height: 100vh;
+  width: 200px;
+  background-color: var(--background-surface);
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
   top: 0;
   left: 0;
-  padding: 24px 12px; 
+  padding: 24px 12px;
   z-index: 100;
   font-size: 1.1rem;
   color: var(--text-color);
-  
+
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-right: 1px solid rgba(54, 51, 51, 0.05);
 }
 
 .sidebar.collapsed {
@@ -464,11 +557,12 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
-  background-color: #0ca678; 
+  background-color: #0ca678;
   border-radius: 50px;
   color: white;
   transition: all 0.3s ease;
-  font-size: 1.3rem;;
+  font-size: 1.3rem;
+  ;
 }
 
 .sidebar.collapsed .profile-pic {
@@ -548,7 +642,8 @@ body {
   width: 100%;
 }
 
-.collapse-button, .theme-button {
+.collapse-button,
+.theme-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -557,7 +652,7 @@ body {
   cursor: pointer;
 }
 
-.sidebar.collapsed .collapse-button, 
+.sidebar.collapsed .collapse-button,
 .sidebar.collapsed .theme-button {
   background-color: #0ca678;
   border-radius: 10px;
@@ -610,7 +705,7 @@ body {
   .dashboard-card {
     width: fit-content;
     height: 280px;
-    width: 100%;
+    width: 80%;
   }
 
   .job-description {

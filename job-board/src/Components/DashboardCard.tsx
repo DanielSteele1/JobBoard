@@ -6,9 +6,6 @@ import { PiNewspaper } from "react-icons/pi";
 
 import useStore from "../State/ZustandStore";
 
-import { IoIosArrowDown } from "react-icons/io";
-//import { IoIosArrowUp } from "react-icons/io";
-
 interface CardProps {
 
   jobData: {
@@ -23,7 +20,6 @@ interface CardProps {
     redirect_url: string;
     created: string;
     contract_type: string;
-
     salary_max: number;
     source: string;
   }
@@ -32,14 +28,14 @@ interface CardProps {
 function DashboardCard({ jobData }: CardProps) {
 
   const isLoading = useStore((state: any) => state.isLoading);
-
+  
   return (
     <section>
       {isLoading ?
         <div className="Skeleton">
 
           <div className="dashboard-card">
-            <div className="job-title" >
+            <div className="job-title">
 
             </div >
 
@@ -61,7 +57,7 @@ function DashboardCard({ jobData }: CardProps) {
 
         :
         <div className="dashboard-card">
-          < div className="job-title" >
+          < div className="job-title">
             {jobData.title}
           </div >
 
@@ -87,8 +83,8 @@ function DashboardCard({ jobData }: CardProps) {
             </div>
 
           </div>
-          <div className="job-description">
-            {jobData.description}
+          <div className='job-description'>
+               {jobData.description}
           </div>
 
           <div className="buttons-tray">
@@ -99,14 +95,6 @@ function DashboardCard({ jobData }: CardProps) {
                 </a>
               </Button>
             </div>
-
-            <div className="button">
-              <Button className="save-job-button" color="teal.7">
-                <a>
-                <IoIosArrowDown/> Read More
-              </a>
-            </Button>
-          </div>
 
           <div className="button">
             <Button className="save-job-button" color="teal.7">

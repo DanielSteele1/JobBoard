@@ -1,16 +1,47 @@
-import { Button } from "@mantine/core";
+import { Button, Select } from "@mantine/core";
 import { BiSearch } from "react-icons/bi";
 
 import DashboardCard from "../Components/DashboardCard";
 import { useEffect, useState } from "react";
 
 import useStore from '../State/ZustandStore.tsx';
+import { HiHome } from "react-icons/hi";
 
-function Dashboard() {
+interface Job {
+
+  id: string,
+  title: string,
+  location: {
+    display_name: string,
+    area?: string[];
+  }
+  description: string,
+  salary_max: string,
+  salary_min: string,
+  contract_type: string,
+  time_posted: string,
+
+}
+
+function Dashboard({ }: Job) {
 
   const setLoading = useStore((state: any) => state.setLoading);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchJobTitle, setSearchJobTitle] = useState('');
+  const [searchLocation, setSearchLocation] = useState('');
+  const [filterRemoteOnly, setFilterRemoteOnly] = useState(false);
+
+  const [filters, setfilters] = useState({
+
+    salary_max: '',
+    salary_min: '',
+    contract_type: '',
+    time_posted: '',
+    experience_level: '',
+
+  })
+
+  // api result
   const [searchResult, setSearchResult] = useState<any>(null);
 
   //loading state
@@ -25,6 +56,76 @@ function Dashboard() {
 
   // get search results
 
+  //filtered results 
+
+  const filteredJobs = searchResult?.results?.filter((job: Job) => {
+
+    if (filters.contract_type) {
+      const isMatch = job.contract_type?.toLowerCase() === filters.contract_type.toLowerCase();
+      if (!isMatch) return false;
+    }
+
+    if (filters.time_posted) {
+      const isMatch = job.time_posted;
+      if (!isMatch) return true;
+    }
+
+    if (filters.experience_level === 'Junior') {
+
+      const isTitle = job.title?.toLowerCase().includes('junior') && job.title.toLowerCase().includes('trainee');
+      const isDesc = job.description?.toLowerCase().includes('junior') && job.description.toLowerCase().includes('trainee');
+
+      if (!isTitle && !isDesc) return false;
+
+    }
+
+    if (filters.experience_level === 'Intern') {
+
+      const isTitle = job.title?.toLowerCase().includes('intern');
+      const isDesc = job.description?.toLowerCase().includes('intern');
+
+      if (!isTitle && !isDesc) return false;
+
+    }
+
+    if (filters.experience_level === 'Mid-level') {
+
+      const isTitle = job.title?.toLowerCase().includes('mid-level');
+      const isDesc = job.description?.toLowerCase().includes('mid-level');
+
+      if (!isTitle && !isDesc) return false;
+
+    }
+
+    if (filters.experience_level === 'Senior') {
+
+      const isTitle = job.title?.toLowerCase().includes('senior');
+      const isDesc = job.description?.toLowerCase().includes('senior');
+
+      if (!isTitle && !isDesc) return false;
+
+    } 
+
+    if (filterRemoteOnly) {
+
+      // if description includes the word remote, show only these jobs
+
+      const isTitle = job.title?.toLowerCase().includes('remote');
+      const isDesc = job.description?.toLowerCase().includes('remote');
+
+      if (!isDesc && !isTitle) return false;
+    }
+
+
+
+
+
+    return true;
+  }
+
+  ) || [];
+
+
   useEffect(() => {
 
     async function getGenericResults() {
@@ -33,7 +134,7 @@ function Dashboard() {
 
         app_id: 'ab6f80a8',
         app_key: '7543aa159a775e8a3a56253ba06d729e',
-        results_per_page: '10',
+        results_per_page: '50',
       });
 
       const GenericResponse = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/1?${params}`, {
@@ -49,15 +150,15 @@ function Dashboard() {
 
   }, []);
 
-
   async function getSearchResults() {
 
     const params = new URLSearchParams({
 
       app_id: 'ab6f80a8',
       app_key: '7543aa159a775e8a3a56253ba06d729e',
-      what: searchTerm,
-      results_per_page: '12',
+      what: searchJobTitle,
+      where: searchLocation,
+      results_per_page: '50',
     });
 
     const response = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/1?${params}`, {
@@ -67,7 +168,6 @@ function Dashboard() {
     const results = await response.json();
     setSearchResult(results);
     console.log(results);
-
   };
 
   const handleSubmit = (e: any) => {
@@ -89,7 +189,7 @@ function Dashboard() {
             <input
               type="text"
               className="input"
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchJobTitle(e.target.value)}
               placeholder="Search for a Job title.."
             />
 
@@ -97,6 +197,7 @@ function Dashboard() {
               type="text"
               className="location-input"
               color='teal.7'
+              onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="Search for a location.."
             />
 
@@ -111,42 +212,83 @@ function Dashboard() {
 
         <div className="search-filters-container">
           <span className="heading"> Filter Results by:</span>
-          <div className="search-filters">
 
-            <div className="input-container">
-              <div id="big-input">
-                <select className="experience-input">
+          <div className="input-container">
+            <Select className="contract-input"
+              label="Job Type"
+              placeholder="Choose Job Type"
+              clearable
+              color='teal.7'
+              value={filters.contract_type}
+              data={['permanent', 'temporary', 'contract']}
+              onChange={(value) => setfilters({ ...filters, contract_type: value || '' })}
 
-                </select>
+            >
 
-                <select className="contract-input">
+            </Select>
 
-                </select>
+            <Select className="experience-input"
+              label="Experience"
+              placeholder="Experience"
+              clearable
+              value={filters.experience_level}
+              color='teal.7'
+              data={['Intern', 'Junior', 'Mid-level', 'Senior']}
+              onChange={(value) => setfilters({ ...filters, experience_level: value || '' })}
 
-              </div>
-            </div>
+            >
 
-            <div id="small-input">
+            </Select>
 
-              <select className="pay-input">
+            <Select className="contract-input"
+              label="Posted Date"
+              placeholder="Choose Posted Date"
+              clearable
+              value={filters.time_posted}
+              color='teal.7'
+              data={['last 24 Hours', 'In the last week', 'In the last month']}
+            >
 
-              </select>
+            </Select>
 
-              <select className="date-input">
+            <Button className="remote-only" color="teal.7" onClick={() => setFilterRemoteOnly(!filterRemoteOnly)}>
+              <HiHome />
+            </Button>
 
-              </select>
-            </div>
+            <Button className="clear-filters" color="teal.7">
+              Clear
+            </Button>
           </div>
         </div>
 
         <div className="dashboard-results">
-          {searchResult?.results?.map((job: any) => (
-            <DashboardCard key={job.id} jobData={job} />
-          ))}
+          <div className="indicators">
+            <div className="results-amount">
+              Showing {filteredJobs.length} Matching Jobs
+            </div>
+
+            {filterRemoteOnly &&
+              <div className="results-isRemote">
+                <HiHome /> Showing Remote only Jobs
+              </div>
+
+            }
+          </div>
+
+          {filteredJobs.length === 0 ?
+
+            <div className="no-results">
+              No results found. Try Broadening your search, or try again.
+            </div>
+            :
+            filteredJobs?.map((job: any) => (
+              <DashboardCard key={job.id} jobData={job} />
+            ))
+          }
         </div>
 
       </div>
-    </section>
+    </section >
 
   )
 }

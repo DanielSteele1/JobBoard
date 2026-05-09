@@ -85,8 +85,6 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
 
         </section >
 
-
-
     )
 
 
