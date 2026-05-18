@@ -12,6 +12,9 @@ More results:
 Your Jobs Page: 
 <img width="1919" height="926" alt="image" src="https://github.com/user-attachments/assets/266d5af7-0971-4f85-9b96-cd0da5678a42" />
 
+Toast notification: 
+<img width="650" height="159" alt="image" src="https://github.com/user-attachments/assets/ce9f0b69-eff5-4763-9c2d-b07b354946aa" />
+
 
 🛠 Planned Features
 
