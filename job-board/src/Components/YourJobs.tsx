@@ -1,6 +1,6 @@
 import useStore from '../State/ZustandStore.tsx';
 import { BsBookmarkFill } from 'react-icons/bs';
-import { FaChartLine, FaHandshake, FaLocationDot, FaNewspaper } from 'react-icons/fa6';
+import { FaChartLine, FaLocationDot, FaNewspaper } from 'react-icons/fa6';
 import { Button } from '@mantine/core';
 import { BiBuilding } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
@@ -32,24 +32,12 @@ function YourJobs() {
   const setSavedJobs = useStore((state: any) => state.setSavedJobs);
 
   const [isGrid, setisGrid] = useState(false);
-  // const [isSavedGrid, setIsSavedGrid] = useState(false);
 
   function handleDeleteJob(index: number) {
 
     setSavedJobs(savedJobs.filter((_: any, i: number) => i !== index));
   }
 
-  function ChangeGridState() {
-
-    setisGrid(true);
-    console.log(isGrid);
-  }
-
-  // function ChangeSavedGridState() {
-
-  //   setIsSavedGrid(true);
-  //   console.log(isSavedGrid);
-  // }
 
   return (
     <section className="YourJobs-container">
@@ -61,16 +49,18 @@ function YourJobs() {
         </div>
 
         <div className="YourJobsButtons">
-          <button className="button-grid">
+          <button className="button-grid"
+            onClick={() => setisGrid(!false)}>
             <CiGrid41 />
           </button>
-          <button className="button-rows">
+          <button className="button-rows"
+            onClick={() => setisGrid(!true)}>
             <CiGrid2H />
           </button>
         </div>
       </div>
 
-      <div className="savedJobs">
+      <div className={isGrid ? "savedJobs-grid" : "savedJobs"}>
 
         {savedJobs.length === 0 ? (
 
@@ -82,26 +72,23 @@ function YourJobs() {
 
         ) : (
 
-
           savedJobs.map((job: JobType, index: number) => (
-            <div className="savedJob" key={index}>
+            <div className={isGrid ? "savedJob-grid" : "savedJob"} key={index}>
               <div className="dashboard-card">
                 <div className="job-title">{job.title}</div>
-                <div className="job-top-details">
+                <div className={isGrid ? "jobs-top-details-grid" : "job-top-details"}>
                   <div className="job-company_name">
                     <BiBuilding /> {job.company?.display_name}
-                  </div>
-                  <div className="job-company_name">
-                    <FaChartLine /> £{job.salary_max}
-                  </div>
-                  <div className="job-company_name">
-                    <FaHandshake /> {job.contract_type}
                   </div>
                   <div className="job-location">
                     <FaLocationDot /> {job.location?.display_name}
                   </div>
+                  <div className="job-company_name">
+                    <FaChartLine /> £{job.salary_max}
+                  </div>
+
                 </div>
-                <div className="buttons-tray">
+                <div className={isGrid ? "buttons-tray-grid" : "buttons-tray"}>
                   <div className="button">
                     <Button
                       className="apply-button"
@@ -140,18 +127,20 @@ function YourJobs() {
 
         <div className="YourJobsButtons">
           <button className="button-grid"
-            onClick={ChangeGridState}>
+            onClick={() => setisGrid(!false)}
+          >
             <CiGrid41 />
           </button>
 
           <button className="button-rows"
-            onClick={ChangeGridState}>
+            onClick={() => setisGrid(!true)}
+          >
             <CiGrid2H />
           </button>
         </div>
       </div>
 
-      <div className="appliedJobs">
+      <div className={isGrid ? "appliedJobs-grid" : "appliedJobs"}>
 
         {appliedJobs.length === 0 ? (
 
@@ -162,22 +151,20 @@ function YourJobs() {
           </div>
         ) : (
           appliedJobs.map((job: JobType, index: number) => (
-            <div className="appliedJob" key={index}>
+            <div className={isGrid ? "appliedJob-grid" : "appiedJob"} key={index}>
               <div className="dashboard-card">
                 <div className="job-title">{job.title}</div>
-                <div className="job-top-details">
+                <div className={isGrid ? "jobs-top-details-grid" : "job-top-details"}>
                   <div className="job-company_name">
                     <BiBuilding /> {job.company?.display_name}
-                  </div>
-                  <div className="job-company_name">
-                    <FaChartLine /> £{job.salary_max}
-                  </div>
-                  <div className="job-company_name">
-                    <FaHandshake /> {job.contract_type}
                   </div>
                   <div className="job-location">
                     <FaLocationDot /> {job.location?.display_name}
                   </div>
+                  <div className="job-company_name">
+                    <FaChartLine /> £{job.salary_max}
+                  </div>
+
                 </div>
               </div>
             </div>
