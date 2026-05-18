@@ -55,11 +55,6 @@ function Dashboard({ }: Job) {
   }, []);
 
 
-
-  // get search results
-
-
-
   //filtered results 
 
   const filteredJobs = searchResult?.results?.filter((job: Job) => {
@@ -164,9 +159,6 @@ function Dashboard({ }: Job) {
       if (!isDesc && !isTitle) return false;
     }
 
-
-
-
     return true;
   }
 
@@ -258,7 +250,7 @@ function Dashboard({ }: Job) {
         </div>
 
         <div className="search-filters-container">
-          <span className="heading"> Filter Results by:</span>
+          <span className="filter-heading"> Filter Results by:</span>
 
           <div className="input-container">
             <Select className="contract-input"

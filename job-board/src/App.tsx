@@ -13,6 +13,7 @@ import { MantineProvider } from '@mantine/core';
 import { Analytics } from '@vercel/analytics/react';
 import Profile from './Components/Profile.tsx';
 import YourJobs from './Components/YourJobs.tsx';
+import MobileNav from './Components/MobileNav.tsx';
 
 function App() {
 
@@ -41,26 +42,28 @@ function App() {
   }), ([isLightOn, setLightOn]);
 
   return (
+    <div className="App-wrapper">
+      <MantineProvider data-mantine-color-scheme={isLightOn ? 'dark' : 'light'}>
+        <BrowserRouter>
 
-    <MantineProvider data-mantine-color-scheme={isLightOn ? 'dark' : 'light'}>
-      <BrowserRouter>
+          <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
 
-        <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
+          <Routes>
+            <Route path='/Profile' element={<Profile />} />
+            <Route path='/YourJobs' element={<YourJobs />} />
+            <Route path='/' element={<Dashboard id={''} title={''} location={{
+              display_name: '',
+              area: undefined
+            }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
 
-        <Routes>
-          <Route path='/Profile' element={<Profile />} />
-          <Route path='/YourJobs' element={<YourJobs />} />
-          <Route path='/' element={<Dashboard id={''} title={''} location={{
-            display_name: '',
-            area: undefined
-          }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <MobileNav />
 
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-
-        <Analytics />
-      </BrowserRouter>
-    </MantineProvider>
+          <Analytics />
+        </BrowserRouter>
+      </MantineProvider>
+    </div>
 
   )
 }

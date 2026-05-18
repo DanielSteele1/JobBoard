@@ -2,9 +2,12 @@ import { Button, Skeleton } from "@mantine/core";
 import { BiBuilding, BiPlus } from "react-icons/bi";
 import { BsFillClockFill } from "react-icons/bs";
 import { FaChartLine, FaHandshake, FaLocationDot } from "react-icons/fa6";
-import { PiNewspaper } from "react-icons/pi";
+
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
 
 import useStore from "../State/ZustandStore";
+import { FaNewspaper } from "react-icons/fa";
 
 interface CardProps {
 
@@ -28,95 +31,161 @@ interface CardProps {
 function DashboardCard({ jobData }: CardProps) {
 
   const isLoading = useStore((state: any) => state.isLoading);
+  const appliedJobs = useStore((state: any) => state.appliedJobs);
+  const savedJobs = useStore((state: any) => state.savedJobs);
 
-  const JobDate = new Intl.DateTimeFormat('en-GB', {
+  const setSavedJobs = useStore((state: any) => state.setSavedJobs);
+  const setAppliedJobs = useStore((state: any) => state.setAppliedJobs);
 
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    hour12: false
+  // add a job + track applied jobs
 
-  }).format(new Date(jobData.created));
-  
-  return (
-    <section>
-      {isLoading ?
-        <div className="Skeleton">
+  const AddAppliedJobs = () => {
 
-          <div className="dashboard-card">
-            <div className="job-title">
+    const newApplied = [...appliedJobs, jobData];
+    setAppliedJobs(newApplied);
 
-            </div >
+    Toastify({
 
-            <div className="job-description">
-              <Skeleton className="Skeleton" />
-            </div>
+      text: `Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
+      duration: 2000,
+      gravity: 'bottom',
+      position: 'right',
+      stopOnFocus: true,
+      style: {
+        bacgkround: 'none !important',
+        backgroundColor: "none !important",
+        borderRadius: '15px',
+        boxShadow: 'none !important',
+        color: 'white',
+        marginTop: '10px',
+      },
 
-            <div className="buttons-tray">
-              <div className="button">
-                <Skeleton className="skeleton-button" />
-              </div>
+  }).showToast();
 
-              <div className="button">
-                <Skeleton className="skeleton-button" />
-              </div>
-            </div>
-          </div>
-        </div>
+}
 
-        :
+const AddSavedJobs = () => {
+
+  const newSavedJobs = [...savedJobs, jobData];
+  setSavedJobs(newSavedJobs);
+
+  Toastify({
+
+    text: `Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
+    duration: 2000,
+    gravity: 'bottom',
+    position: 'right',
+    stopOnFocus: true,
+    style: {
+      bacgkround: 'none !important',
+      backgroundColor: "none !important",
+      borderRadius: '15px',
+      boxShadow: 'none !important',
+      color: 'white',
+      marginTop: '10px',
+    },
+
+  }).showToast();
+
+}
+
+const JobDate = new Intl.DateTimeFormat('en-GB', {
+
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  hour12: false
+
+}).format(new Date(jobData.created));
+
+return (
+  <section>
+    {isLoading ?
+      <div className="Skeleton">
+
         <div className="dashboard-card">
-          < div className="job-title">
-            {jobData.title}
+          <div className="job-title">
+
           </div >
 
-          <div className="job-top-details">
-            <div className="job-company_name">
-              <BiBuilding /> {jobData.company?.display_name}
-            </div>
-
-            <div className="job-company_name">
-              <FaChartLine /> £{jobData.salary_max}
-            </div>
-
-            <div className="job-company_name">
-              <FaHandshake /> {jobData.contract_type}
-            </div>
-
-            <div className="job-location">
-              <FaLocationDot /> {jobData.location?.display_name}
-            </div>
-
-            <div className="job-created">
-              <BsFillClockFill /> {JobDate}
-            </div>
-
-          </div>
-          <div className='job-description'>
-               {jobData.description}
+          <div className="job-description">
+            <Skeleton className="Skeleton" />
           </div>
 
           <div className="buttons-tray">
             <div className="button">
-              <Button className="apply-button" color="teal.7">
-                <a href={jobData?.redirect_url}>
-                  <PiNewspaper /> Apply
-                </a>
-              </Button>
+              <Skeleton className="skeleton-button" />
             </div>
 
+            <div className="button">
+              <Skeleton className="skeleton-button" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      :
+      <div className="dashboard-card">
+        < div className="job-title">
+          {jobData.title}
+        </div >
+
+        <div className="job-top-details">
+          <div className="job-company_name">
+            <BiBuilding /> {jobData.company?.display_name}
+          </div>
+
+          <div className="job-company_name">
+            <FaChartLine /> £{jobData.salary_max}
+          </div>
+
+          <div className="job-company_name">
+            <FaHandshake /> {jobData.contract_type}
+          </div>
+
+          <div className="job-location">
+            <FaLocationDot /> {jobData.location?.display_name}
+          </div>
+
+          <div className="job-created">
+            <BsFillClockFill /> {JobDate}
+          </div>
+
+        </div>
+        <div className='job-description'>
+          {jobData.description}
+        </div>
+
+        <div className="buttons-tray">
           <div className="button">
-            <Button className="save-job-button" color="teal.7">
+            <Button
+              className="apply-button"
+              color="teal.7"
+              value="appliedJob"
+              onClick={AddAppliedJobs}>
+
+              <a href={jobData?.redirect_url} target="_blank" rel="noopener noreferrer">
+                <FaNewspaper /> Apply
+              </a>
+            </Button>
+          </div>
+
+          <div className="button">
+            <Button
+              className="save-job-button"
+              color="teal.7"
+              value="savedJob"
+              onClick={AddSavedJobs}>
               <a>
                 <BiPlus /> Save job
               </a>
             </Button>
           </div>
         </div>
-        </div>
+      </div>
 
-      }
+    }
 
-    </section >
-  )
+  </section >
+)
 }
 export default DashboardCard;
