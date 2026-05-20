@@ -7,6 +7,11 @@ import { useEffect, useState } from "react";
 import useStore from '../State/ZustandStore.tsx';
 import { HiHome } from "react-icons/hi";
 
+import { Input } from '@mantine/core';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+
+import { motion, AnimatePresence } from 'framer-motion';
+
 interface Job {
 
   id: string,
@@ -20,7 +25,6 @@ interface Job {
   salary_min: string,
   contract_type: string,
   created: string;
-
 }
 
 function Dashboard({ }: Job) {
@@ -30,6 +34,8 @@ function Dashboard({ }: Job) {
   const [searchJobTitle, setSearchJobTitle] = useState('');
   const [searchLocation, setSearchLocation] = useState('');
   const [filterRemoteOnly, setFilterRemoteOnly] = useState(false);
+
+  const [hideFilters, setHideFilters] = useState(false);
 
   const [filters, setfilters] = useState({
 
@@ -224,33 +230,45 @@ function Dashboard({ }: Job) {
             <span> Search for Jobs! Use the filters below to search for the right job for you.</span>
           </div>
 
-          <form className="search-input" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              className="input"
-              onChange={(e) => setSearchJobTitle(e.target.value)}
-              placeholder="Search for a Job title.."
-            />
+          <form className="search-input-form" onSubmit={handleSubmit}>
 
-            <input
-              type="text"
-              className="location-input"
-              color='teal.7'
-              onChange={(e) => setSearchLocation(e.target.value)}
-              placeholder="Search for a location.."
-            />
+            <div className="search-input-container">
 
-            <Button
-              type="submit"
-              className="search"
-              color='teal.7'> <BiSearch />Search Jobs
-            </Button>
+              <Input
+                type="text"
+                className="search-input"
+                onChange={(e) => setSearchJobTitle(e.target.value)}
+                placeholder="Search for a Job title.."
+              />
+
+              <Input
+                type="text"
+                className="location-input"
+                color='teal.7'
+                onChange={(e) => setSearchLocation(e.target.value)}
+                placeholder="Search for a location.."
+              />
+            </div>
+
+            <div className="search">
+              <Button
+                type="submit"
+                color='teal.7'> <BiSearch />Search Jobs
+              </Button>
+            </div>
 
           </form>
         </div>
 
-        <div className="search-filters-container">
-          <span className="filter-heading"> Filter Results by:</span>
+        <div className={hideFilters ? "search-filters-container" : "search-filters-container-reduced"}>
+          <div className="filter-top">
+            <span className="filter-heading"> Filter Results by:</span>
+            <button
+              onClick={() => setHideFilters(prev => !prev)}
+              color="teal.7">
+              {hideFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            </button>
+          </div>
 
           <div className="input-container">
             <Select className="contract-input"
@@ -261,7 +279,6 @@ function Dashboard({ }: Job) {
               value={filters.contract_type}
               data={['permanent', 'temporary', 'contract']}
               onChange={(value) => setfilters({ ...filters, contract_type: value || '' })}
-
             >
 
             </Select>
@@ -274,12 +291,11 @@ function Dashboard({ }: Job) {
               color='teal.7'
               data={['Intern', 'Junior', 'Mid-level', 'Senior']}
               onChange={(value) => setfilters({ ...filters, experience_level: value || '' })}
-
             >
 
             </Select>
 
-            <Select className="contract-input"
+            <Select className="posted_date-input"
               label="Posted Date"
               placeholder="Choose Posted Date"
               clearable
@@ -315,16 +331,34 @@ function Dashboard({ }: Job) {
             }
           </div>
 
-          {filteredJobs.length === 0 ?
+          <AnimatePresence mode="popLayout">
+            {filteredJobs.length === 0 ?
 
-            <div className="no-results">
-              No results found. Try Broadening your search, or try again.
-            </div>
-            :
-            filteredJobs?.map((job: any) => (
-              <DashboardCard key={job.id} jobData={job} />
-            ))
-          }
+              <div className="no-results">
+                No results found. Try Broadening your search, or try again.
+              </div>
+              :
+              filteredJobs?.map((job: any) => (
+                <motion.div key={job.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                  transition={{
+                    type: "tween",
+                    stiffness: 500,
+                    damping: 60,
+                    opacity: { duration: 0.15 }
+                  }}
+                  style={{ width: '100%' }
+                  }
+
+                >
+                  <DashboardCard jobData={job} />
+                </motion.div>
+              ))
+            }
+          </AnimatePresence>
         </div>
 
       </div>
