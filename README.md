@@ -18,7 +18,8 @@ Toast notification:
 
 🛠 Planned Features
 
-    - user accounts system on the frontend via supabase
+    - user accounts system on the frontend via supabase.
+    - Abillity for users to add a note onto each saved/applied job.
 
 ✔️ Completed Features
 
