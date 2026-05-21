@@ -388,6 +388,10 @@ body {
   margin: 10px;
 }
 
+.remote-only svg{
+  margin-right: 10px;
+}
+
 .Footer {
   display: flex;
   flex-direction: row;
@@ -475,6 +479,7 @@ body {
   height: 30px;
   width: 30px;
   background-color: #0ca678;
+  color: white;
   cursor: pointer;
 }
 
@@ -495,6 +500,8 @@ body {
   display: grid;
   width: 100%;
   min-height: 300px;
+  max-height: 550px;
+  overflow-y: scroll;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   scroll-behavior: smooth;
@@ -547,7 +554,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 200px;
+  height: 280px;
   align-items: flex-start;
   justify-content: center;
   border-radius: 12px;
@@ -639,7 +646,7 @@ body {
 .buttons-tray {
   display: flex;
   flex-direction: row;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .button {
@@ -680,6 +687,24 @@ body {
   padding: 10px;
   color: var(--accent);
 }
+
+.job-description-your-jobs {
+  display: flex;
+  height: fit-content;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.job-description-your-jobs-hidden {
+  display: none;
+}
+
 
 .job-description {
   height: fit-content;
@@ -905,6 +930,8 @@ body {
   border: none;
   color: white;
   cursor: pointer;
+
+
 }
 
 .sidebar.collapsed .collapse-button,
@@ -923,6 +950,25 @@ body {
 
 .display-none {
   display: none;
+}
+
+.loading-animation {
+  display: flex;
+  height: 250px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  background-color: var(--background-surface);
+  margin-top: 10px;
+  border-radius: 12px;
+}
+
+.loading-animation .mantine-Progress-root{
+  height: 20px;
+  width: 60%;
 }
 
 @media(min-width: 1000px) and (max-width: 1400px) {

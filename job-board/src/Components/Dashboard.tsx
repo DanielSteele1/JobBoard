@@ -1,5 +1,5 @@
-import { Button, Select } from "@mantine/core";
-import { BiSearch } from "react-icons/bi";
+import { Button, Pagination, Select, Loader, Input } from "@mantine/core";
+import { BiSearch, } from "react-icons/bi";
 
 import DashboardCard from "../Components/DashboardCard";
 import { useEffect, useState } from "react";
@@ -7,9 +7,7 @@ import { useEffect, useState } from "react";
 import useStore from '../State/ZustandStore.tsx';
 import { HiHome } from "react-icons/hi";
 
-import { Input } from '@mantine/core';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Job {
@@ -27,39 +25,32 @@ interface Job {
   created: string;
 }
 
-function Dashboard({ }: Job) {
 
+function Dashboard({ }: Job) {
   const setLoading = useStore((state: any) => state.setLoading);
+  const isLoading = useStore((state: any) => state.isLoading);
 
   const [searchJobTitle, setSearchJobTitle] = useState('');
   const [searchLocation, setSearchLocation] = useState('');
   const [filterRemoteOnly, setFilterRemoteOnly] = useState(false);
-
   const [hideFilters, setHideFilters] = useState(false);
-
   const [filters, setfilters] = useState({
-
     salary_max: '',
     salary_min: '',
     contract_type: '',
     time_posted: '',
     experience_level: '',
-
-  })
-
+  });
   // api result
   const [searchResult, setSearchResult] = useState<any>(null);
 
+
   //loading state
-
   useEffect(() => {
-
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
-
   }, []);
-
 
   //filtered results 
 
@@ -104,7 +95,6 @@ function Dashboard({ }: Job) {
       }
 
     }
-
 
     if (filters.contract_type) {
       const isMatch = job.contract_type?.toLowerCase() === filters.contract_type.toLowerCase();
@@ -154,7 +144,6 @@ function Dashboard({ }: Job) {
 
     }
 
-
     if (filterRemoteOnly) {
 
       // if description includes the word remote, show only these jobs
@@ -170,6 +159,18 @@ function Dashboard({ }: Job) {
 
   ) || [];
 
+  // Pagination helpers
+  function chunk<T>(arr: T[], size: number): T[][] {
+    if (!arr.length) return [];
+    const res = [];
+    for (let i = 0; i < arr.length; i += size) {
+      res.push(arr.slice(i, i + size));
+    }
+    return res;
+  }
+
+  const pageSize = 5; // jobs per page
+  const pagedJobs = chunk(filteredJobs, pageSize);
 
   useEffect(() => {
 
@@ -192,10 +193,15 @@ function Dashboard({ }: Job) {
 
     };
     getGenericResults();
+    setLoading(true);
 
   }, []);
 
   async function getSearchResults() {
+
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 3000);
+    
 
     const params = new URLSearchParams({
 
@@ -213,6 +219,8 @@ function Dashboard({ }: Job) {
     const results = await response.json();
     setSearchResult(results);
     console.log(results);
+
+    return () => clearTimeout(timer);
   };
 
   const handleSubmit = (e: any) => {
@@ -221,6 +229,8 @@ function Dashboard({ }: Job) {
     getSearchResults();
 
   };
+
+  const [activePage, setActivePage] = useState(1);
 
   return (
     <section className="Dashboard-container">
@@ -308,11 +318,7 @@ function Dashboard({ }: Job) {
             </Select>
 
             <Button className="remote-only" color="teal.7" onClick={() => setFilterRemoteOnly(!filterRemoteOnly)}>
-              <HiHome />
-            </Button>
-
-            <Button className="clear-filters" color="teal.7">
-              Clear
+              <HiHome /> Remote
             </Button>
           </div>
         </div>
@@ -327,42 +333,59 @@ function Dashboard({ }: Job) {
               <div className="results-isRemote">
                 <HiHome /> Showing Remote only Jobs
               </div>
-
             }
           </div>
 
-          <AnimatePresence mode="popLayout">
-            {filteredJobs.length === 0 ?
 
-              <div className="no-results">
-                No results found. Try Broadening your search, or try again.
+          {isLoading ? (
+            <div className="loading-animation">
+
+              <Loader size="xl" color="teal.7" type="bars" />
+
+            </div>
+          ) : (
+            <div>
+              <AnimatePresence mode="popLayout">
+                {filteredJobs.length === 0 ? (
+                  <div className="no-results">
+                    No results found. Try Broadening your search, or try again.
+                  </div>
+                ) : (
+                  pagedJobs[activePage - 1]?.map((job: any) => (
+                    <motion.div key={job.id}
+                      layout
+                      initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                      transition={{
+                        type: "tween",
+                        stiffness: 500,
+                        damping: 60,
+                        opacity: { duration: 0.15 }
+                      }}
+                      style={{ width: '100%' }}
+                    >
+                      <DashboardCard jobData={job} />
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+
+              <div className="pagination">
+                <Pagination
+                  total={pagedJobs.length}
+                  value={activePage}
+                  onChange={setActivePage}
+                  mt="sm"
+                  color="teal.7"
+                />
               </div>
-              :
-              filteredJobs?.map((job: any) => (
-                <motion.div key={job.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -15 }}
-                  transition={{
-                    type: "tween",
-                    stiffness: 500,
-                    damping: 60,
-                    opacity: { duration: 0.15 }
-                  }}
-                  style={{ width: '100%' }
-                  }
-
-                >
-                  <DashboardCard jobData={job} />
-                </motion.div>
-              ))
-            }
-          </AnimatePresence>
+            </div>
+          )}
         </div>
 
       </div>
-    </section >
+    </section>
 
   )
 }

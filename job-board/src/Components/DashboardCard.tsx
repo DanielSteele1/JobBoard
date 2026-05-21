@@ -46,7 +46,7 @@ function DashboardCard({ jobData }: CardProps) {
 
     Toastify({
 
-      text: `<span> <BsBookmark/> </span> Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
+      text: `Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
       duration: 2000,
       gravity: 'bottom',
       position: 'right',
@@ -66,12 +66,37 @@ function DashboardCard({ jobData }: CardProps) {
 
   const AddSavedJobs = () => {
 
-    const newSavedJobs = [...savedJobs, jobData];
-    setSavedJobs(newSavedJobs);
+    const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
+
+    if (!isAlreadySaved) {
+
+      const newSavedJobs = [...savedJobs, jobData];
+      setSavedJobs(newSavedJobs);
+
+      Toastify({
+
+        text: `Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
+        duration: 2000,
+        gravity: 'bottom',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          display: 'flex',
+          bacgkround: 'none !important',
+          backgroundColor: "none !important",
+          borderRadius: '15px',
+          boxShadow: 'none !important',
+          color: 'white',
+          marginTop: '10px',
+        },
+
+      }).showToast();
+
+    }
 
     Toastify({
 
-      text: `Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
+      text: `You have already saved ${jobData.title} at ${jobData.company?.display_name}.`,
       duration: 2000,
       gravity: 'bottom',
       position: 'right',
@@ -176,7 +201,7 @@ function DashboardCard({ jobData }: CardProps) {
                 value="savedJob"
                 onClick={AddSavedJobs}>
                 <a>
-                   <BiBookmark /> Bookmark
+                  <BiBookmark /> Bookmark
                 </a>
               </Button>
             </div>

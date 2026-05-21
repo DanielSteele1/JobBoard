@@ -37,8 +37,7 @@ function YourJobs() {
 
     setSavedJobs(savedJobs.filter((_: any, i: number) => i !== index));
   }
-
-
+  
   return (
     <section className="YourJobs-container">
 
@@ -86,8 +85,12 @@ function YourJobs() {
                   <div className="job-company_name">
                     <FaChartLine /> £{job.salary_max}
                   </div>
-
                 </div>
+
+                  <div className={isGrid ? 'job-description-your-jobs-hidden': 'job-description-your-jobs'}>
+                      {job.description}
+                  </div>
+
                 <div className={isGrid ? "buttons-tray-grid" : "buttons-tray"}>
                   <div className="button">
                     <Button

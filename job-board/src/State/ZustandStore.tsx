@@ -1,16 +1,24 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-const useStore = create((set) => ({
+const useStore = create(
+    persist((set) => ({
 
-    isLoading: false,
-    setLoading: (data: boolean) => set({ isLoading: data }),
+        isLoading: false,
+        setLoading: (data: boolean) => set({ isLoading: data }),
 
-    appliedJobs: [],
-    setAppliedJobs: (data: any) => set({ appliedJobs: data }),
+        appliedJobs: [],
+        setAppliedJobs: (newApplied: any) => set({ appliedJobs: newApplied }),
 
-    savedJobs: [],
-    setSavedJobs: (data: any) => set({ savedJobs: data }),
+        savedJobs: [],
+        setSavedJobs: (newSaved: any) => set({ savedJobs: newSaved }),
 
-}));
+    }),
+
+    {
+        name: 'job-storage',
+    }
+)
+);
 
 export default useStore;
