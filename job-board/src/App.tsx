@@ -38,7 +38,6 @@ function App() {
 
     localStorage.setItem("theme", theme);
 
-
   }), ([isLightOn, setLightOn]);
 
   return (

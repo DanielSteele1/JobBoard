@@ -1,6 +1,6 @@
 import { Button, Skeleton } from "@mantine/core";
-import { BiBookmark, BiBuilding } from "react-icons/bi";
-import { BsBriefcaseFill, BsFillClockFill } from "react-icons/bs";
+import { BiBuilding } from "react-icons/bi";
+import { BsBookmark, BsBriefcaseFill, BsFillBookmarkFill, BsFillClockFill } from "react-icons/bs";
 import { FaChartLine, FaHandshake, FaLocationDot } from "react-icons/fa6";
 
 import Toastify from 'toastify-js';
@@ -37,6 +37,8 @@ function DashboardCard({ jobData }: CardProps) {
   const setSavedJobs = useStore((state: any) => state.setSavedJobs);
   const setAppliedJobs = useStore((state: any) => state.setAppliedJobs);
 
+  const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
+
   // add a job + track applied jobs
 
   const AddAppliedJobs = () => {
@@ -64,9 +66,8 @@ function DashboardCard({ jobData }: CardProps) {
 
   }
 
-  const AddSavedJobs = () => {
 
-    const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
+  const AddSavedJobs = () => {
 
     if (!isAlreadySaved) {
 
@@ -92,6 +93,7 @@ function DashboardCard({ jobData }: CardProps) {
 
       }).showToast();
 
+      return;
     }
 
     Toastify({
@@ -112,7 +114,6 @@ function DashboardCard({ jobData }: CardProps) {
       },
 
     }).showToast();
-
   }
 
   const JobDate = new Intl.DateTimeFormat('en-GB', {
@@ -199,9 +200,14 @@ function DashboardCard({ jobData }: CardProps) {
                 className="save-job-button"
                 color="teal.7"
                 value="savedJob"
+                disabled={isAlreadySaved}
                 onClick={AddSavedJobs}>
                 <a>
-                  <BiBookmark /> Bookmark
+                  {isAlreadySaved ?
+                    <span>  <BsFillBookmarkFill />  Bookmarked </span>
+                    :
+                    <span> <BsBookmark />  Bookmark  </span>
+                  }
                 </a>
               </Button>
             </div>

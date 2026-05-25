@@ -25,7 +25,6 @@ interface Job {
   created: string;
 }
 
-
 function Dashboard({ }: Job) {
   const setLoading = useStore((state: any) => state.setLoading);
   const isLoading = useStore((state: any) => state.isLoading);
@@ -201,8 +200,7 @@ function Dashboard({ }: Job) {
 
     setLoading(true);
     const timer = setTimeout(() => setLoading(false), 3000);
-    
-
+  
     const params = new URLSearchParams({
 
       app_id: 'ab6f80a8',

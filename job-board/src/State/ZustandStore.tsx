@@ -13,6 +13,12 @@ const useStore = create(
         savedJobs: [],
         setSavedJobs: (newSaved: any) => set({ savedJobs: newSaved }),
 
+        interviewingJobs: [],
+        setInterviewingJobs: (newInterviewJobs: any) => set({ interviewingJobs: newInterviewJobs}),
+
+        offers: [],
+        setOffers: (newOffers: any) => set({ offers: newOffers}),
+
     }),
 
     {
