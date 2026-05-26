@@ -1,6 +1,8 @@
 Job's portal web application - Frontend web application coded with ReactJs and TypeScript.
 
-This web application features a jobs board using Adzuna's public API, and allows users to save, apply and track current job postings. User accounts are planned by implemeting Supabase.
+This web application features a jobs board using Adzuna's public API, and allows users to save, apply and track current job postings.
+They'll be able to saved notes to each job as well as move a job saved, to interviewing and then to and offers tab. 
+User accounts are planned by implemeting Supabase.
 
 📷 Screenshots - Everything is subject to change including this UI
 
@@ -10,7 +12,8 @@ Project is in early stages of development - more screenshots to come.
 More results: 
 <img width="1917" height="920" alt="image" src="https://github.com/user-attachments/assets/f76a2548-a717-4f2d-af04-5a5c551dabd1" />
 Your Jobs Page: 
-<img width="1919" height="926" alt="image" src="https://github.com/user-attachments/assets/266d5af7-0971-4f85-9b96-cd0da5678a42" />
+<img width="1916" height="917" alt="image" src="https://github.com/user-attachments/assets/b196b51d-0239-4aa2-ab48-cce2dd5f483d" />
+
 
 Toast notification: 
 <img width="650" height="159" alt="image" src="https://github.com/user-attachments/assets/ce9f0b69-eff5-4763-9c2d-b07b354946aa" />
@@ -19,7 +22,7 @@ Toast notification:
 🛠 Planned Features
 
     - user accounts system on the frontend via supabase.
-    - Abillity for users to add a note onto each saved/applied job.
+    - Abillity for users to add a note onto each applied, saved, interviewing and offer job. 
 
 ✔️ Completed Features
 
@@ -28,6 +31,7 @@ Toast notification:
     - Baic UI and fetching Adzunas API.
     - Ability to filter jobs by location, salary, date posted, experience, job title and whether a job is remote or not.
     - Column and Grid views for all results pages
+    - Users can move a job between saved, interviewing and offers tabs.
 
 🛠 Technologies Used (so far)
 
