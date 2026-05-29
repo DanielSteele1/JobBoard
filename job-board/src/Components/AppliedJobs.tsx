@@ -2,7 +2,7 @@
 
 import { FaChartLine, FaLocationDot, FaNewspaper } from 'react-icons/fa6';
 import useStore from '../State/ZustandStore.tsx';
-import { BiBuilding} from 'react-icons/bi';
+import { BiBuilding } from 'react-icons/bi';
 import { Button } from '@mantine/core';
 
 interface JobType {
@@ -24,7 +24,6 @@ interface JobType {
 
 interface SavedProps {
     isGrid: boolean;
-    handleDeleteJob: (index: number) => void;
 }
 
 function Applied({ isGrid }: SavedProps) {
@@ -67,22 +66,22 @@ function Applied({ isGrid }: SavedProps) {
                                         <FaChartLine /> £{job.salary_max}
                                     </div>
                                 </div>
-                          
-                            <div className={isGrid ? "buttons-tray-grid" : "buttons-tray"}>
-                                <Button
-                                    className="button"
-                                    style={{ marginTop: '8px' }}
-                                    color={'teal.7'}
-                                >
-                                    <FaNewspaper />
-                                    View Listing
-                                </Button>
-                            </div>
+
+                                <div className={isGrid ? "buttons-tray-grid" : "buttons-tray"}>
+                                    <Button
+                                        className="button"
+                                        style={{ marginTop: '8px' }}
+                                        color={'teal.7'}
+                                    >
+                                        <a href={job?.redirect_url} target="_blank" rel="noopener noreferrer">
+                                            <FaNewspaper /> View Listing
+                                        </a>
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     ))
                 )}
-
             </div>
         </section>
 

@@ -48,7 +48,7 @@ function DashboardCard({ jobData }: CardProps) {
 
     Toastify({
 
-      text: `Saved job ${jobData.title} at ${jobData.company?.display_name}.`,
+      text: `Applied for ${jobData.title} at ${jobData.company?.display_name}.`,
       duration: 2000,
       gravity: 'bottom',
       position: 'right',
@@ -152,7 +152,10 @@ function DashboardCard({ jobData }: CardProps) {
         :
         <div className="dashboard-card">
           <div className="job-title">
-            <BsBriefcaseFill /> {jobData.title}
+            <div>
+              <BsBriefcaseFill />
+              {jobData.title}
+            </div>
           </div>
 
           <div className="job-top-details">

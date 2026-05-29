@@ -14,17 +14,17 @@ const useStore = create(
         setSavedJobs: (newSaved: any) => set({ savedJobs: newSaved }),
 
         interviewingJobs: [],
-        setInterviewingJobs: (newInterviewJobs: any) => set({ interviewingJobs: newInterviewJobs}),
+        setInterviewingJobs: (newInterviewJobs: any) => set({ interviewingJobs: newInterviewJobs }),
 
         offers: [],
-        setOffers: (newOffers: any) => set({ offers: newOffers}),
+        setOffers: (newOffers: any) => set({ offers: newOffers }),
 
     }),
 
-    {
-        name: 'job-storage',
-    }
-)
+        {
+            name: 'job-storage',
+        }
+    )
 );
 
 export default useStore;

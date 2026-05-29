@@ -4,9 +4,10 @@ import { FaChartLine, FaLocationDot, FaNewspaper } from 'react-icons/fa6';
 import useStore from '../State/ZustandStore.tsx';
 import { BiBuilding, BiTrash } from 'react-icons/bi';
 import { RiBookmarkFill } from 'react-icons/ri';
-import { Button } from '@mantine/core';
+import { Button, Select } from '@mantine/core';
 
 interface JobType {
+    id: number;
     title: string;
     description: string;
     company: {
@@ -30,6 +31,37 @@ interface SavedProps {
 
 function Saved({ isGrid, handleDeleteJob }: SavedProps) {
     const savedJobs = useStore((state: any) => state.savedJobs as JobType[]);
+    const setSavedJobs = useStore((state: any) => state.setSavedJobs);
+
+    const interviewingJobs = useStore((state: any) => state.interviewingJobs as JobType[]);
+    const setInterviewingJobs = useStore((state: any) => state.setInterviewingJobs);
+
+    const offers = useStore((state: any) => state.offers as JobType[]);
+    const setOffers = useStore((state: any) => state.setOffers);
+
+    const handleStatusChange = (value: string | null, job: any) => {
+        if (!value) return;
+
+        if (value === '📖 Bookmarks') {
+
+            //delete from old array
+            setSavedJobs(savedJobs.filter(j => j.id !== job.id));
+            //add to new array
+            setSavedJobs([...interviewingJobs, job]);
+        }
+
+        if (value === '💬 Interviewing') {
+
+            setSavedJobs(savedJobs.filter(j => j.id !== job.id));
+            setInterviewingJobs([...interviewingJobs, job]);
+
+        }
+
+        if (value === '🎉 Offers') {
+            setSavedJobs(savedJobs.filter(j => j.id !== job.id));
+            setOffers([...offers, job]);
+        }
+    }
 
     return (
 
@@ -52,7 +84,16 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                     savedJobs.map((job: JobType, index: number) => (
                         <div className={isGrid ? "appliedJob-grid" : "appiedJob"} key={index}>
                             <div className="dashboard-card">
-                                <div className="job-title">{job.title}
+                                <div className={isGrid ? "job-title-isGrid" : "job-title"}>
+
+                                    <div>{job.title} </div>
+
+                                    <Select
+                                        className="Status-select"
+                                        placeholder="Move to..."
+                                        data={['📖 Bookmarks', '💬 Interviewing', '🎉 Offers']}
+                                        onChange={(value) => handleStatusChange(value, job)}
+                                    ></Select>
                                 </div>
 
                                 <div className={isGrid ? "jobs-top-details-grid" : "job-top-details"}>
@@ -73,16 +114,9 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                                         style={{ marginTop: '8px' }}
                                         color={'teal.7'}
                                     >
-                                        <FaNewspaper />
-                                        View Listing
-                                    </Button>
-
-                                    <Button
-                                        className="button"
-                                        color={'teal.7'}
-                                        onClick={() => handleDeleteJob(index)}
-                                        style={{ marginTop: '8px' }}>
-                                        💬  Move to Interviewing
+                                        <a href={job?.redirect_url} target="_blank" rel="noopener noreferrer">
+                                            <FaNewspaper /> View Listing
+                                        </a>
                                     </Button>
 
                                     <Button
@@ -95,7 +129,7 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                                         Delete
                                     </Button>
                                 </div>
-                                
+
 
                             </div>
                         </div>

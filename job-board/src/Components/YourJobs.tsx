@@ -8,8 +8,10 @@ import Saved from './SavedJobs.tsx';
 import Applied from './AppliedJobs.tsx';
 import Offers from './OfferJobs.tsx';
 import Interviews from './InterviewingJobs.tsx';
+import Toastify from 'toastify-js';
 
 interface JobType {
+  id: string;
   title: string;
   description: string;
   company: {
@@ -37,12 +39,30 @@ function YourJobs() {
 
   // tabs slection
   const [selectTabs, setSelectTabs] = useState('applied');
-
   const [isGrid, setisGrid] = useState(false);
 
   function handleDeleteJob(index: number) {
 
     setSavedJobs(savedJobs.filter((_: any, i: number) => i !== index));
+
+    Toastify({
+
+      text: 'Job deleted from Bookmarks',
+      duration: 2000,
+      gravity: 'bottom',
+      position: 'right',
+      stopOnFocus: true,
+      style: {
+        display: 'flex',
+        bacgkround: 'none !important',
+        backgroundColor: "none !important",
+        borderRadius: '15px',
+        boxShadow: 'none !important',
+        color: 'white',
+        marginTop: '10px',
+      },
+
+    }).showToast();
   }
 
   return (
@@ -85,7 +105,6 @@ function YourJobs() {
             </Button>
           </div>
 
-
           <div className="buttons-filters-mobile">
 
             <Button
@@ -102,7 +121,7 @@ function YourJobs() {
               onClick={() => setSelectTabs('saved')}
             >
               <BsFillBookmarkFill />
-               {savedJobs.length}
+              {savedJobs.length}
             </Button>
 
             <Button
@@ -133,26 +152,24 @@ function YourJobs() {
           </button>
         </div>
       </div>
-
-
       {
         selectTabs === 'saved' &&
         <Saved isGrid={isGrid} handleDeleteJob={handleDeleteJob} />
       }
       {
         selectTabs === 'applied' &&
-        <Applied isGrid={isGrid} handleDeleteJob={handleDeleteJob} />
+        <Applied isGrid={isGrid} />
       }
       {
         selectTabs === 'interviewing' &&
-        <Interviews isGrid={isGrid} handleDeleteJob={handleDeleteJob} />
+        <Interviews isGrid={isGrid} />
       }
       {
         selectTabs === 'offers' &&
-        <Offers isGrid={isGrid} handleDeleteJob={handleDeleteJob} />
+        <Offers isGrid={isGrid} />
       }
 
-    </section >
+    </section>
   )
 }
 
