@@ -7,15 +7,29 @@ User accounts are planned by implemeting Supabase.
 📷 Screenshots - Everything is subject to change including this UI
 
 Project is in early stages of development - more screenshots to come.
-<img width="1917" height="918" alt="image" src="https://github.com/user-attachments/assets/d409ec9c-edd1-4f53-b851-f7c355f9650c" />
+
+Main Page: 
+
+<img width="1917" height="916" alt="image" src="https://github.com/user-attachments/assets/40aad336-1fa1-4903-8373-dbb765486e2c" />
 
 More results: 
+
 <img width="1917" height="920" alt="image" src="https://github.com/user-attachments/assets/f76a2548-a717-4f2d-af04-5a5c551dabd1" />
+
 Your Jobs Page: 
+
 <img width="1916" height="917" alt="image" src="https://github.com/user-attachments/assets/b196b51d-0239-4aa2-ab48-cce2dd5f483d" />
 
+Grid View:
+
+<img width="1918" height="920" alt="image" src="https://github.com/user-attachments/assets/b536865b-92e0-47d2-96e4-a621d3fc3625" />
+
+Moving a job to another List:
+
+<img width="395" height="399" alt="image" src="https://github.com/user-attachments/assets/893862d2-89aa-4cea-874a-8a656a2f75a1" />
 
 Toast notification: 
+
 <img width="650" height="159" alt="image" src="https://github.com/user-attachments/assets/ce9f0b69-eff5-4763-9c2d-b07b354946aa" />
 
 
