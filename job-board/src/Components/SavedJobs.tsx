@@ -5,6 +5,8 @@ import useStore from '../State/ZustandStore.tsx';
 import { BiBuilding, BiTrash } from 'react-icons/bi';
 import { RiBookmarkFill } from 'react-icons/ri';
 import { Button, Select } from '@mantine/core';
+import { motion } from 'framer-motion';
+import Toastify from 'toastify-js';
 
 interface JobType {
     id: number;
@@ -48,6 +50,27 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
             setSavedJobs(savedJobs.filter(j => j.id !== job.id));
             //add to new array
             setSavedJobs([...interviewingJobs, job]);
+
+            Toastify({
+
+                text: 'Job is already Bookmarked',
+                duration: 2000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+                style: {
+                    display: 'flex',
+                    bacgkround: 'none !important',
+                    backgroundColor: "none !important",
+                    borderRadius: '15px',
+                    boxShadow: 'none !important',
+                    color: 'white',
+                    marginTop: '10px',
+                },
+
+            }).showToast();
+
+
         }
 
         if (value === '💬 Interviewing') {
@@ -55,11 +78,49 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
             setSavedJobs(savedJobs.filter(j => j.id !== job.id));
             setInterviewingJobs([...interviewingJobs, job]);
 
+            Toastify({
+
+                text: 'Job moved to Interviewing',
+                duration: 2000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+                style: {
+                    display: 'flex',
+                    bacgkround: 'none !important',
+                    backgroundColor: "none !important",
+                    borderRadius: '15px',
+                    boxShadow: 'none !important',
+                    color: 'white',
+                    marginTop: '10px',
+                },
+
+            }).showToast();
+
         }
 
         if (value === '🎉 Offers') {
             setSavedJobs(savedJobs.filter(j => j.id !== job.id));
             setOffers([...offers, job]);
+
+            Toastify({
+
+                text: 'Job moved to offers',
+                duration: 2000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+                style: {
+                    display: 'flex',
+                    bacgkround: 'none !important',
+                    backgroundColor: "none !important",
+                    borderRadius: '15px',
+                    boxShadow: 'none !important',
+                    color: 'white',
+                    marginTop: '10px',
+                },
+
+            }).showToast();
         }
     }
 
@@ -81,9 +142,24 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                         You haven't saved any jobs yet.
                     </div>
                 ) : (
+
+
                     savedJobs.map((job: JobType, index: number) => (
                         <div className={isGrid ? "appliedJob-grid" : "appiedJob"} key={index}>
-                            <div className="dashboard-card">
+                            <motion.div
+                                className="dashboard-card"
+                                layout
+                                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                                transition={{
+                                    type: "tween",
+                                    stiffness: 500,
+                                    damping: 60,
+                                    delay: index * 0.05,
+                                    opacity: { duration: 0.15 }
+                                }}
+                                style={{ width: '100%' }}>
                                 <div className={isGrid ? "job-title-isGrid" : "job-title"}>
 
                                     <div>{job.title} </div>
@@ -129,15 +205,17 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                                         Delete
                                     </Button>
                                 </div>
+                            </motion.div>
 
-
-                            </div>
                         </div>
-                    ))
-                )}
 
-            </div>
-        </section>
+                    ))
+
+                )
+                }
+
+            </div >
+        </section >
     )
 
 }

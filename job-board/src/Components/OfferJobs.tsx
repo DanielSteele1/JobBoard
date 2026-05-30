@@ -5,6 +5,7 @@ import useStore from '../State/ZustandStore.tsx';
 import { BiBuilding, BiTrash } from 'react-icons/bi';
 import { Button, Select } from '@mantine/core';
 import Toastify from 'toastify-js';
+import { motion } from 'framer-motion';
 
 
 interface JobType {
@@ -146,7 +147,20 @@ function Offers({ isGrid }: SavedProps) {
                 ) : (
                     offers.map((job: JobType, index: number) => (
                         <div className={isGrid ? "appliedJob-grid" : "appiedJob"} key={index}>
-                            <div className="dashboard-card">
+                            <motion.div
+                                className="dashboard-card"
+                                layout
+                                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                                transition={{
+                                    type: "tween",
+                                    stiffness: 500,
+                                    damping: 60,
+                                    delay: index * 0.05,
+                                    opacity: { duration: 0.15 }
+                                }}
+                                style={{ width: '100%' }}>
                                 <div className={isGrid ? "job-title-isGrid" : "job-title"}>
 
                                     <div>{job.title} </div>
@@ -191,7 +205,8 @@ function Offers({ isGrid }: SavedProps) {
                                         Delete
                                     </Button>
                                 </div>
-                            </div>
+
+                            </motion.div>
                         </div>
                     ))
                 )}

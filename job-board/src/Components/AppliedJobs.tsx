@@ -4,6 +4,7 @@ import { FaChartLine, FaLocationDot, FaNewspaper } from 'react-icons/fa6';
 import useStore from '../State/ZustandStore.tsx';
 import { BiBuilding } from 'react-icons/bi';
 import { Button } from '@mantine/core';
+import { motion } from 'framer-motion';
 
 interface JobType {
     title: string;
@@ -51,7 +52,21 @@ function Applied({ isGrid }: SavedProps) {
                 ) : (
                     appliedJobs.map((job: JobType, index: number) => (
                         <div className={isGrid ? "appliedJob-grid" : "appiedJob"} key={index}>
-                            <div className="dashboard-card">
+                            <motion.div
+                                className="dashboard-card"
+                                layout
+                                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 500,
+                                    damping: 60,
+                                    delay: index * 0.05,
+                                    opacity: { duration: 0.15 }
+                                }}
+                                style={{ width: '100%' }}>
+
                                 <div className="job-title">{job.title}
                                 </div>
 
@@ -78,8 +93,9 @@ function Applied({ isGrid }: SavedProps) {
                                         </a>
                                     </Button>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
+
                     ))
                 )}
             </div>
