@@ -39,6 +39,8 @@ function DashboardCard({ jobData }: CardProps) {
 
   const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
 
+  const isLoggedIn = useStore((state: any) => state.isLoggedin);
+ 
   // add a job + track applied jobs
 
   const AddAppliedJobs = () => {
@@ -68,6 +70,29 @@ function DashboardCard({ jobData }: CardProps) {
 
 
   const AddSavedJobs = () => {
+
+    if (isLoggedIn === false) {
+
+      Toastify({
+
+        text: `Please log in to bookmark jobs`,
+        duration: 2000,
+        gravity: 'bottom',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          display: 'flex',
+          bacgkround: 'none !important',
+          backgroundColor: "none !important",
+          borderRadius: '15px',
+          boxShadow: 'none !important',
+          color: 'white',
+          marginTop: '10px',
+        },
+
+      }).showToast();
+
+    }
 
     if (!isAlreadySaved) {
 

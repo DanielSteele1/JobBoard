@@ -15,6 +15,9 @@ import Profile from './Components/Profile.tsx';
 import YourJobs from './Components/YourJobs.tsx';
 import MobileNav from './Components/MobileNav.tsx';
 
+import useStore from './State/ZustandStore.tsx';
+import Login from './Components/Login.tsx';
+
 function App() {
 
   const [isLightOn, setLightOn] = useState(() => {
@@ -28,6 +31,9 @@ function App() {
     setLightOn(prev => !prev);
   };
 
+  const isLoggedin = useStore((state: any) => state.isLoggedIn);
+
+
   useEffect(() => {
 
     const theme = isLightOn ? "light" : "dark";
@@ -38,17 +44,24 @@ function App() {
 
     localStorage.setItem("theme", theme);
 
-  }), ([isLightOn, setLightOn]);
+  }, [isLightOn]);
 
   return (
     <div className="App-wrapper">
+
       <MantineProvider data-mantine-color-scheme={isLightOn ? 'dark' : 'light'}>
         <BrowserRouter>
 
           <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
 
           <Routes>
-            <Route path='/Profile' element={<Profile />} />
+            {isLoggedin ?
+              <Route path='/Profile' element={<Profile />} />
+              :
+              <Route path='/Login' element={<Login />} />
+
+            }
+
             <Route path='/YourJobs' element={<YourJobs />} />
             <Route path='/' element={<Dashboard id={''} title={''} location={{
               display_name: '',

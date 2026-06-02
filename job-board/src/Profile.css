@@ -101,7 +101,45 @@
     width: 100%;
 }
 
-.email .mantine-TextInput-root, 
-.username {
+.email .mantine-TextInput-root {
     margin-bottom: 10px;
+}
+
+@media(min-width: 200px) and (max-width: 750px) {
+
+    .Profile{
+        margin-top: 0px;
+        
+    }
+
+    .Profile-container{
+        width: 80%;
+    }
+
+    .profile-details-container{
+        width: 100%;
+    }
+
+    .profile-details{
+        width: 80%;
+        flex-direction: column;
+    }
+
+    .details-bottom{
+        display:flex;
+        flex-direction: row;
+        height: 300px;
+        width: 100%;
+    }
+
+    .details-bottom button {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stats{
+        width: 100%;
+        flex-direction: column;
+    }
 }

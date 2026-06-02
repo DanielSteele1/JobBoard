@@ -1,14 +1,12 @@
 import { Button, Pagination, Select, Loader, Input } from "@mantine/core";
 import { BiSearch, } from "react-icons/bi";
-
 import DashboardCard from "../Components/DashboardCard";
 import { useEffect, useState } from "react";
-
 import useStore from '../State/ZustandStore.tsx';
 import { HiHome } from "react-icons/hi";
-
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { motion, AnimatePresence } from 'framer-motion';
+import Signup from "./Signup.tsx";
 
 interface Job {
 
@@ -200,7 +198,7 @@ function Dashboard({ }: Job) {
 
     setLoading(true);
     const timer = setTimeout(() => setLoading(false), 3000);
-  
+
     const params = new URLSearchParams({
 
       app_id: 'ab6f80a8',
@@ -232,7 +230,11 @@ function Dashboard({ }: Job) {
 
   return (
     <section className="Dashboard-container">
+
+      <Signup />
+
       <div className="dashboard">
+
         <div className="dashboard-top">
           <div className="dashboard-info">
             <span> Search for Jobs! Use the filters below to search for the right job for you.</span>
@@ -357,7 +359,7 @@ function Dashboard({ }: Job) {
                       exit={{ opacity: 0, scale: 0.95, y: -15 }}
                       transition={{
                         type: "tween",
-                        stiffness: 500,
+                        stiffness: 100,
                         damping: 60,
                         opacity: { duration: 0.15 }
                       }}

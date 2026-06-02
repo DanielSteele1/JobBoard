@@ -1,7 +1,6 @@
 import useStore from '../State/ZustandStore.tsx';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import { Button } from '@mantine/core';
-import { CiGrid2H, CiGrid41 } from 'react-icons/ci';
 import { useState } from 'react';
 
 import Saved from './SavedJobs.tsx';
@@ -9,6 +8,7 @@ import Applied from './AppliedJobs.tsx';
 import Offers from './OfferJobs.tsx';
 import Interviews from './InterviewingJobs.tsx';
 import Toastify from 'toastify-js';
+import { IoGrid } from 'react-icons/io5';
 
 interface JobType {
   id: string;
@@ -67,6 +67,7 @@ function YourJobs() {
 
   return (
     <section className="YourJobs-container">
+  
       <div className="YourJobsFilters">
 
         <div className="YourJobsButtons">
@@ -143,12 +144,8 @@ function YourJobs() {
 
         <div className="buttons-layout">
           <button className="button-grid"
-            onClick={() => setisGrid(!false)}>
-            <CiGrid41 />
-          </button>
-          <button className="button-rows"
-            onClick={() => setisGrid(!true)}>
-            <CiGrid2H />
+            onClick={() => setisGrid(prev => !prev)}>
+            <IoGrid /> Toggle Grid
           </button>
         </div>
       </div>

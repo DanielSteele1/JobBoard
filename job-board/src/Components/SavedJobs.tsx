@@ -46,11 +46,6 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
 
         if (value === '📖 Bookmarks') {
 
-            //delete from old array
-            setSavedJobs(savedJobs.filter(j => j.id !== job.id));
-            //add to new array
-            setSavedJobs([...interviewingJobs, job]);
-
             Toastify({
 
                 text: 'Job is already Bookmarked',
