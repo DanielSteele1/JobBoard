@@ -92,7 +92,6 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
                     </NavLink>
                 </Tooltip>
 
-
                 {isLoggedin ?
                     <Tooltip label="Your Jobs" position="right" color="teal.7" transitionProps={{ transition: 'fade-right', duration: 300 }}>
 

@@ -5,6 +5,7 @@ import useStore from '../State/ZustandStore.tsx';
 import { BiBuilding } from 'react-icons/bi';
 import { Button } from '@mantine/core';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface JobType {
     title: string;
@@ -46,7 +47,14 @@ function Applied({ isGrid }: SavedProps) {
 
                     <div className="appliedJob-skeleton">
 
-                        You haven't applied for any jobs yet.
+                        No applications yet...
+
+                        <Link to="/">
+                            <Button
+                                color="teal.7">
+                                Go to Dashboard
+                            </Button>
+                        </Link>
 
                     </div>
                 ) : (

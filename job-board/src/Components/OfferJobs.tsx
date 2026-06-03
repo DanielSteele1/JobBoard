@@ -6,6 +6,7 @@ import { BiBuilding, BiTrash } from 'react-icons/bi';
 import { Button, Select } from '@mantine/core';
 import Toastify from 'toastify-js';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 
 interface JobType {
@@ -142,6 +143,13 @@ function Offers({ isGrid }: SavedProps) {
                     <div className="appliedJob-skeleton">
 
                         No offers yet...
+
+                        <Link to="/">
+                            <Button
+                                color="teal.7">
+                                Go to Dashboard
+                            </Button>
+                        </Link>
 
                     </div>
                 ) : (

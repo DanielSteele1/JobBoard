@@ -6,6 +6,7 @@ import { BiBuilding, BiTrash } from 'react-icons/bi';
 import { Button, Select } from '@mantine/core';
 import Toastify from 'toastify-js';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface JobType {
     id: number;
@@ -157,6 +158,13 @@ function Interviews({ isGrid }: SavedProps) {
 
                     <div className="appliedJob-skeleton">
                         No interviews yet...
+
+                        <Link to="/">
+                            <Button
+                                color="teal.7">
+                                Go to Dashboard
+                            </Button>
+                        </Link>
                     </div>
                 ) : (
                     interviewingJobs.map((job: JobType, index: number) => (

@@ -7,6 +7,7 @@ import { RiBookmarkFill } from 'react-icons/ri';
 import { Button, Select } from '@mantine/core';
 import { motion } from 'framer-motion';
 import Toastify from 'toastify-js';
+import { Link } from 'react-router-dom';
 
 interface JobType {
     id: number;
@@ -135,6 +136,13 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
 
                     <div className="appliedJob-skeleton">
                         You haven't saved any jobs yet.
+
+                        <Link to="/">
+                            <Button
+                                color="teal.7">
+                                Go to Dashboard
+                            </Button>
+                        </Link>
                     </div>
                 ) : (
 

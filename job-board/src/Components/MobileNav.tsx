@@ -5,27 +5,27 @@ import { Link } from "react-router-dom";
 import useStore from "../State/ZustandStore";
 import { BsFillBookmarkFill } from "react-icons/bs";
 
-function mobileNav() {
+function MobileNav() {
 
-  const isLoggedIn = useStore((state: any) => state.isLoggedin);
+  const isLoggedIn = useStore((state: any) => state.isLoggedIn);
 
   return (
-
     <section className="mobileNav">
 
       <div className="nav-mobile-link">
-        {isLoggedIn ? <Link to="/Profile">
-          <span>
-            <MdAccountCircle />
-          </span>
-        </Link>
-          :
+        {isLoggedIn ? (
+          <Link to="/Profile">
+            <span>
+              <MdAccountCircle />
+            </span>
+          </Link>
+        ) : (
           <Link to="/Login">
             <span>
               <MdAccountCircle />
             </span>
           </Link>
-        }
+        )}
       </div>
 
       <div className="nav-mobile-link">
@@ -34,26 +34,26 @@ function mobileNav() {
             <TbBlocks />
           </span>
         </Link>
-
       </div>
 
       <div className="nav-mobile-link">
-        {isLoggedIn ? <Link to="/Profile">
-          <span>
-            <BiBookmark />
-          </span>
-        </Link>
-          :
-          <Link to="/Login">
+        {isLoggedIn ? (
+          <Link to="/YourJobs">
             <span>
               <BsFillBookmarkFill />
             </span>
           </Link>
-        }
+        ) : (
+          <Link to="/Login">
+            <span>
+              <BiBookmark />
+            </span>
+          </Link>
+        )}
       </div>
 
     </section>
-  )
+  );
 }
 
-export default mobileNav;
+export default MobileNav;
