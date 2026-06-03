@@ -18,7 +18,6 @@ function Profile() {
 
   const userProfile = useStore((state: any) => state.userProfile);
 
-  const isLoggedIn = useStore((state: any) => state.isLoggedIn);
   const setLoggedin = useStore((state: any) => state.setLoggedin);
   const setUserProfile = useStore((state: any) => state.setUserProfile);
 
