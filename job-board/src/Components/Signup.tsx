@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 function Signup() {
 
     const isLoggedIn = useStore((state: any) => state.isLoggedIn);
+    const userProfile = useStore((state: any) => state.userProfile);
 
     return (
         <section className="Signup-container">
-
             <div className="signup">
                 <div className='sidebar-icon-mobile'>
 
@@ -27,11 +27,16 @@ function Signup() {
 
                 {isLoggedIn ?
 
-                   <div className="profile-pic">
-                        <IoPersonCircleOutline /> 
+                    <div className="profile-topbar">
+                        <div className="profile-pic">
+                            <IoPersonCircleOutline />
+                        </div>
+
+                        <div className="username-topbar">
+                        {userProfile.username}
+                        </div>
                     </div>
                     :
-
                     <Link to="/Login">
                         <Button
                             color='teal.7'

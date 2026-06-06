@@ -27,7 +27,7 @@
     height: 120px;
     font-size: 4rem;
     margin: 10px;
-    background: linear-gradient(135deg, var(--accent), #0a9562);
+    background-color: var(--accent);
     border-radius: 100px;
     color: white;
 }
@@ -73,8 +73,9 @@
     padding: 20px;
 }
 
+
 .stat-card:hover {
-    background-color: var(--accent);
+    background-color: var(--background-secondary);
     color: white;
     transition: all 0.3s ease;
 }
@@ -125,7 +126,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: 1rem;
     font-weight: 500;
-    background-color: var(--accent) !important;
+    background-color: var(--accent);
     color: white !important;
     border: none;
     border-radius: 12px;
@@ -137,18 +138,12 @@
     gap: 10px;
 }
 
-.logout-button:hover {
-    background-color: #0a9562 !important;
-}
-
-.logout-button:active {
-    transform: translateY(0);
-}
 
 @media(min-width: 750px) and (max-width: 1600px) {
 
 
     .Profile-container {
+        justify-content: center;
         max-width: 60%;
     }
 
@@ -157,13 +152,11 @@
     }
 
     .profile-stats-grid {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
 
-
 }
-
 
 @media(min-width: 200px) and (max-width: 750px) {
     .Profile-container {

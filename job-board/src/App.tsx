@@ -17,6 +17,7 @@ import MobileNav from './Components/MobileNav.tsx';
 
 import useStore from './State/ZustandStore.tsx';
 import Login from './Components/Login.tsx';
+import Signup from './Components/Signup.tsx';
 
 function App() {
 
@@ -53,23 +54,25 @@ function App() {
         <BrowserRouter>
 
           <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
+          <div className="main-content">
+            <Signup />
 
-          <Routes>
-            {isLoggedin ?
-              <Route path='/Profile' element={<Profile />} />
-              :
-              <Route path='/Login' element={<Login />} />
+            <Routes>
+              {isLoggedin ?
+                <Route path='/Profile' element={<Profile />} />
+                :
+                <Route path='/Login' element={<Login />} />
+              }
 
-            }
+              <Route path='/YourJobs' element={<YourJobs />} />
+              <Route path='/' element={<Dashboard id={''} title={''} location={{
+                display_name: '',
+                area: undefined
+              }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
 
-            <Route path='/YourJobs' element={<YourJobs />} />
-            <Route path='/' element={<Dashboard id={''} title={''} location={{
-              display_name: '',
-              area: undefined
-            }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
-
-            <Route path='*' element={<NotFound />} />
-          </Routes>
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </div>
           <MobileNav />
 
           <Analytics />

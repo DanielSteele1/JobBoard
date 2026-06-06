@@ -113,7 +113,7 @@ function YourJobs() {
               value={'applied'}
               onClick={() => setSelectTabs('applied')}
             >
-              📰 {appliedJobs.length}
+              📰 Applications {appliedJobs.length}
             </Button>
 
             <Button
@@ -122,7 +122,7 @@ function YourJobs() {
               onClick={() => setSelectTabs('saved')}
             >
               <BsFillBookmarkFill />
-              {savedJobs.length}
+              Bookmarks {savedJobs.length}
             </Button>
 
             <Button
@@ -130,22 +130,22 @@ function YourJobs() {
               value={'interviewing'}
               onClick={() => setSelectTabs('interviewing')}
             >
-              💬{interviewingJobs.length}
+              💬 Interviews {interviewingJobs.length}
             </Button>
 
             <Button
               className="tabs-buttons"
               value={'offers'}
               onClick={() => setSelectTabs('offers')}>
-              🎉{offers.length}
+              🎉 Offers {offers.length}
             </Button>
           </div>
         </div>
 
         <div className="buttons-layout">
-          <button className="button-grid"
+          <button className="button-grid "
             onClick={() => setisGrid(prev => !prev)}>
-            <IoGrid /> Toggle Grid
+            <IoGrid />
           </button>
         </div>
       </div>

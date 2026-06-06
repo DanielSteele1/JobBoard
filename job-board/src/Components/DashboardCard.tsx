@@ -39,7 +39,7 @@ function DashboardCard({ jobData }: CardProps) {
 
   const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
 
-  const isLoggedIn = useStore((state: any) => state.isLoggedin);
+  const isLoggedIn = useStore((state: any) => state.isLoggedIn);
  
   // add a job + track applied jobs
 
@@ -56,7 +56,6 @@ function DashboardCard({ jobData }: CardProps) {
       position: 'right',
       stopOnFocus: true,
       style: {
-        bacgkround: 'none !important',
         backgroundColor: "none !important",
         borderRadius: '15px',
         boxShadow: 'none !important',
@@ -82,7 +81,6 @@ function DashboardCard({ jobData }: CardProps) {
         stopOnFocus: true,
         style: {
           display: 'flex',
-          bacgkround: 'none !important',
           backgroundColor: "none !important",
           borderRadius: '15px',
           boxShadow: 'none !important',
@@ -92,9 +90,10 @@ function DashboardCard({ jobData }: CardProps) {
 
       }).showToast();
 
+      return;
     }
 
-    if (!isAlreadySaved) {
+    if (!isAlreadySaved && isLoggedIn === true) {
 
       const newSavedJobs = [...savedJobs, jobData];
       setSavedJobs(newSavedJobs);
@@ -108,7 +107,6 @@ function DashboardCard({ jobData }: CardProps) {
         stopOnFocus: true,
         style: {
           display: 'flex',
-          bacgkround: 'none !important',
           backgroundColor: "none !important",
           borderRadius: '15px',
           boxShadow: 'none !important',
@@ -130,7 +128,6 @@ function DashboardCard({ jobData }: CardProps) {
       stopOnFocus: true,
       style: {
         display: 'flex',
-        bacgkround: 'none !important',
         backgroundColor: "none !important",
         borderRadius: '15px',
         boxShadow: 'none !important',

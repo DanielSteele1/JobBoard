@@ -7,6 +7,7 @@ import { HiHome } from "react-icons/hi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { motion, AnimatePresence } from 'framer-motion';
 import Signup from "./Signup.tsx";
+import { TbBuildingSkyscraper } from "react-icons/tb";
 
 interface Job {
 
@@ -231,13 +232,19 @@ function Dashboard({ }: Job) {
   return (
     <section className="Dashboard-container">
 
-      <Signup />
-
       <div className="dashboard">
 
         <div className="dashboard-top">
           <div className="dashboard-info">
-            <span> Search for Jobs! Use the filters below to search for the right job for you.</span>
+            <div className="dashboard-title">
+              <span className='dashboard-logo'>
+                <TbBuildingSkyscraper />
+              </span>
+              <div className="title">
+                Jobs Tracker
+              </div>
+            </div>
+            <span> Use the filters below to search for the right job for you.</span>
           </div>
 
           <form className="search-input-form" onSubmit={handleSubmit}>
