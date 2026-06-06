@@ -6,7 +6,6 @@ import useStore from '../State/ZustandStore.tsx';
 import { HiHome } from "react-icons/hi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { motion, AnimatePresence } from 'framer-motion';
-import Signup from "./Signup.tsx";
 import { TbBuildingSkyscraper } from "react-icons/tb";
 
 interface Job {
