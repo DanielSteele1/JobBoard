@@ -6,6 +6,7 @@ import { BiBuilding } from 'react-icons/bi';
 import { Button } from '@mantine/core';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { TbBlocks } from 'react-icons/tb';
 
 interface JobType {
     title: string;
@@ -52,10 +53,9 @@ function Applied({ isGrid }: SavedProps) {
                         <Link to="/">
                             <Button
                                 color="teal.7">
-                                Go to Dashboard
+                               <TbBlocks /> Go to Dashboard
                             </Button>
                         </Link>
-
                     </div>
                 ) : (
                     appliedJobs.map((job: JobType, index: number) => (

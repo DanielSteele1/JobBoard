@@ -27,10 +27,25 @@
   color: #fff;
 }
 
+.S9gUrf-YoZ4jf {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 auto !important;
+}
+
+.Google-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  margin: 0 auto;
+}
+
 [data-mantine-color-scheme="dark"],
 :root[data-mantine-color-scheme="dark"] {
   --background: #0a0e27;
-  --background-secondary: #1a1f3a;
+  --background-secondary: #212652;
   --text-color: #f0f4f8;
   --accent: #0ca678;
   --background-surface: #151d38;
@@ -189,6 +204,9 @@ body {
   padding: 10px;
   justify-content: flex-end;
   align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .signup {
@@ -226,7 +244,7 @@ body {
   font-size: 1.4rem;
 }
 
-.dashboard-logo svg{
+.dashboard-logo svg {
   font-size: 1.6rem;
   color: #0ca678;
 }
@@ -497,7 +515,6 @@ body {
 .YourJobsButtons {
   display: flex;
   align-items: center;
-  padding: 10px;
   justify-content: center;
 }
 
@@ -1233,11 +1250,9 @@ body {
   display: flex;
   width: 100%;
   height: 100px;
-  background-color: var(--background-surface);
   border-radius: 10px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
 }
 
 .buttons-layout {
@@ -1245,7 +1260,6 @@ body {
   flex-direction: row;
   width: fit-content;
   font-size: 1.3rem;
-  padding: 10px;
 }
 
 .buttons-filters {
@@ -1408,6 +1422,110 @@ body {
   width: 100%;
   padding: 10px;
   margin-top: 20px;
+}
+
+.input-a-job{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 150px;
+  background-color: var(--background-surface);
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-a-job Button{
+  margin: 10px;
+}
+
+.Dialog{
+  display: flex;
+  background-color: var(--background-surface) !important;
+  border: none !important;
+}
+
+.add-job-dialog{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--text-color);
+  height: fit-content;
+}
+
+.add-job-title{
+  display: inline-flex;
+  align-items:  flex-start;
+  height: fit-content;
+  justify-content: flex-start;
+}
+
+.add-job-title svg{
+  color: var(--accent);
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  
+}
+
+.add-job-description{
+  display: flex;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 350;
+}
+
+.add-job-dialog Button {
+  display: flex;
+  width: 200px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.job-inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.job-inputs span{
+  display: flex;
+  height: fit-content;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 0.9rem;
+}
+
+.add-job-dialog input{
+  display: flex;
+  width: 100%;
+  height: 40px;
+  margin: 10px;
+  background-color: var(--background-secondary);
+  border: 0px;
+  padding: 10px;
+}
+
+.select-array{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+}
+
+.add-job-dialog input:active{
+  border:#0ca678;
 }
 
 @media(min-width: 1000px) and (max-width: 1600px) {
@@ -1573,7 +1691,6 @@ body {
   .search-filters-container .input-container {
     flex-direction: column;
     width: 100%;
-
     align-items: center;
     justify-content: center;
     height: fit-content;

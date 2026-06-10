@@ -19,6 +19,9 @@ import useStore from './State/ZustandStore.tsx';
 import Login from './Components/Login.tsx';
 import Signup from './Components/Signup.tsx';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+
 function App() {
 
   const [isLightOn, setLightOn] = useState(() => {
@@ -34,6 +37,7 @@ function App() {
 
   const isLoggedin = useStore((state: any) => state.isLoggedIn);
 
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
 
@@ -50,34 +54,36 @@ function App() {
   return (
     <div className="App-wrapper">
 
-      <MantineProvider data-mantine-color-scheme={isLightOn ? 'dark' : 'light'}>
-        <BrowserRouter>
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <MantineProvider data-mantine-color-scheme={isLightOn ? 'dark' : 'light'}>
+          <BrowserRouter>
 
-          <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
-          <div className="main-content">
-            <Signup />
+            <Sidebar isLightOn={isLightOn} toggleLight={toggleLight} />
+            <div className="main-content">
+              <Signup />
 
-            <Routes>
-              {isLoggedin ?
-                <Route path='/Profile' element={<Profile />} />
-                :
-                <Route path='/Login' element={<Login />} />
-              }
+              <Routes>
+                {isLoggedin ?
+                  <Route path='/Profile' element={<Profile />} />
+                  :
+                  <Route path='/Login' element={<Login />} />
+                }
 
-              <Route path='/YourJobs' element={<YourJobs />} />
-              <Route path='/' element={<Dashboard id={''} title={''} location={{
-                display_name: '',
-                area: undefined
-              }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
+                <Route path='/YourJobs' element={<YourJobs />} />
+                <Route path='/' element={<Dashboard id={''} title={''} location={{
+                  display_name: '',
+                  area: undefined
+                }} description={''} salary_max={''} salary_min={''} contract_type={''} created={''} />} />
 
-              <Route path='*' element={<NotFound />} />
-            </Routes>
-          </div>
-          <MobileNav />
+                <Route path='*' element={<NotFound />} />
+              </Routes>
+            </div>
+            <MobileNav />
 
-          <Analytics />
-        </BrowserRouter>
-      </MantineProvider>
+            <Analytics />
+          </BrowserRouter>
+        </MantineProvider>
+      </GoogleOAuthProvider>
     </div>
 
   )

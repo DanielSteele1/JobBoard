@@ -8,6 +8,8 @@ import useStore from "../State/ZustandStore";
 import { useNavigate } from 'react-router-dom';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 
+ import {googleLogout} from '@react-oauth/google';
+
 function Profile() {
 
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ function Profile() {
   const handleLogout = () => {
 
     setLoggedin(false);
+    googleLogout();
     setUserProfile({ id: '', username: '', password: null });
 
     Toastify({

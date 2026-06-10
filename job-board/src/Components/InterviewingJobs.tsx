@@ -7,6 +7,7 @@ import { Button, Select } from '@mantine/core';
 import Toastify from 'toastify-js';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { TbBlocks } from 'react-icons/tb';
 
 interface JobType {
     id: number;
@@ -162,6 +163,7 @@ function Interviews({ isGrid }: SavedProps) {
                         <Link to="/">
                             <Button
                                 color="teal.7">
+                                <TbBlocks/>
                                 Go to Dashboard
                             </Button>
                         </Link>

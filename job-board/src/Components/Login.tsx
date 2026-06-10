@@ -2,6 +2,9 @@ import { Button } from "@mantine/core";
 import { TbBuildingSkyscraper } from "react-icons/tb";
 
 import useStore from "../State/ZustandStore";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+
+import { jwtDecode } from "jwt-decode";
 
 import Toastify from 'toastify-js';
 import { useNavigate } from "react-router-dom";
@@ -16,7 +19,7 @@ function Login() {
 
         setLoggedin(true);
         setUserProfile({
-            id: '0',
+            id: 0,
             username: 'Guest',
             password: null,
         });
@@ -58,20 +61,30 @@ function Login() {
 
                 <form className="login-form">
 
-                    <script src="https://accounts.google.com/gsi/client" async></script>
-                    <div id="g_id_onload"
-                        data-client_id="443657157960-8234ddl3ntqkijughsu06g6bepv4gj8u.apps.googleusercontent.com"
-                        data-login_uri="http://localhost:5173/Profile"
-                        data-auto_prompt="false">
-                    </div>
+                    <div className="Google-button">
+                        <GoogleLogin
+                            onSuccess={(credentialResponse: CredentialResponse) => {
+                                if (credentialResponse.credential) {
+                                    const decoded = jwtDecode(credentialResponse.credential);
+                                    console.log(decoded);
 
-                    <div className="g_id_signin"
-                        data-type="standard"
-                        data-size="large"
-                        data-theme="outline"
-                        data-text="sign_in_with"
-                        data-shape="rectangular"
-                        data-logo_alignment="right">
+                                } else {
+                                    console.error('No credential returned');
+                                }
+
+                                setLoggedin(true);
+                                navigate("/Profile");
+                            }}
+
+                            onError={() => console.log('Login failed')}
+                            useOneTap
+                            theme={"outline"}
+                            type={'standard'}
+                            shape={'pill'}
+                            size={'large'}
+                            width="300"
+                            logo_alignment={'center'}
+                        />
                     </div>
 
                     <span className="divider">

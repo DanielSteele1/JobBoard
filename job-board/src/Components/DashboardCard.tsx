@@ -9,9 +9,12 @@ import "toastify-js/src/toastify.css";
 import useStore from "../State/ZustandStore";
 import { FaNewspaper } from "react-icons/fa";
 
+import { supabase } from '../Components/Supabase.ts';
+
 interface CardProps {
 
   jobData: {
+    id: number;
     title?: string;
     description?: string;
     company?: {
@@ -38,15 +41,32 @@ function DashboardCard({ jobData }: CardProps) {
   const setAppliedJobs = useStore((state: any) => state.setAppliedJobs);
 
   const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
-
+  const userProfile = useStore((state: any) => state.userProfile);
   const isLoggedIn = useStore((state: any) => state.isLoggedIn);
- 
+
   // add a job + track applied jobs
 
-  const AddAppliedJobs = () => {
+  const AddAppliedJobs = async () => {
 
     const newApplied = [...appliedJobs, jobData];
     setAppliedJobs(newApplied);
+
+    const { data, error, status } = await supabase
+      .from("Users")
+      .update({ applied_jobs: newApplied })
+      .eq("id", userProfile.id)
+      .select();
+
+    if (error) {
+      console.log('Error:', error);
+    }
+    else {
+      console.log('Supabase Status Code:', status);
+      console.log('Updated Row Data Returned:', data);
+    }
+
+    console.log("👉 TARGETING TABLE ROW ID:", userProfile.id);
+    console.log("👉 TARGETING PAYLOAD DATA:", newApplied);
 
     Toastify({
 

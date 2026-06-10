@@ -73,7 +73,6 @@
     padding: 20px;
 }
 
-
 .stat-card:hover {
     background-color: var(--background-secondary);
     color: white;
