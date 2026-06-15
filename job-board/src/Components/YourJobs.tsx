@@ -10,9 +10,12 @@ import Toastify from 'toastify-js';
 import { IoGrid } from 'react-icons/io5';
 
 import { useDisclosure } from '@mantine/hooks';
-import { Dialog, Button, Select, } from '@mantine/core';
+import { Dialog, Button, Select, Tooltip, } from '@mantine/core';
 import { BiPlus } from 'react-icons/bi';
 import { TbBuildingSkyscraper } from 'react-icons/tb';
+import { CiExport } from "react-icons/ci";
+
+import { CSVLink } from "react-csv";
 
 interface JobType {
   id: number;
@@ -59,6 +62,23 @@ function YourJobs() {
 
   })
 
+  // combine all arrays
+  const data = [...appliedJobs, ...savedJobs, ...interviewingJobs, ...offers];
+
+  const csvData = data.map((job) => ({
+
+    title: job.title || 'N/A',
+    Company: job.company?.display_name || 'N/A',
+    Description: job.description || 'N/A',
+    Pay: job.salary_min || 'N/A',
+    Contract_Type: job.contract_type || 'N/A',
+    Location: job.location?.display_name || 'N/A',
+    Link: job.redirect_url || 'N/A',
+  }));
+
+  console.log(data);
+
+
   function AddCustomJob(e: React.FormEvent) {
     e.preventDefault();
 
@@ -98,7 +118,6 @@ function YourJobs() {
     }
 
     Toastify({
-
 
       text: 'Custom Job Added!',
       duration: 2000,
@@ -152,6 +171,7 @@ function YourJobs() {
       <div className="input-a-job">
 
         <span> Want to track a job not found from this app? </span>
+
 
         <Button color="teal.7" onClick={toggle}> <BiPlus /> Add a custom job </Button>
 
@@ -232,10 +252,26 @@ function YourJobs() {
         </div>
 
         <div className="buttons-layout">
-          <button className="button-grid"
-            onClick={() => setisGrid(prev => !prev)}>
-            <IoGrid />
-          </button>
+
+
+          <Tooltip label="Export to CSV" position="top" color="teal.6" transitionProps={{ transition: 'fade', duration: 300 }}>
+            <div>
+              <CSVLink data={csvData} filename={'my_jobs.csv'} className="">
+                <Button className="button-csv"
+                  color="teal.7">
+                  <CiExport />
+                </Button>
+              </CSVLink>
+            </div>
+          </Tooltip>
+
+          <Tooltip label="Switch Views" position="top" color="teal.6" transitionProps={{ transition: 'fade', duration: 300 }}>
+            <Button className="button-grid"
+              color="teal.7"
+              onClick={() => setisGrid(prev => !prev)}>
+              <IoGrid />
+            </Button>
+          </Tooltip>
         </div>
       </div>
 

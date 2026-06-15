@@ -1,14 +1,15 @@
 
 import { Button } from '@mantine/core';
 import "../Profile.css";
-import { IoPersonCircle } from 'react-icons/io5';
-import { MdLogout } from 'react-icons/md';
+import { MdAlternateEmail, MdLogout } from 'react-icons/md';
 import Toastify from 'toastify-js';
 import useStore from "../State/ZustandStore";
 import { useNavigate } from 'react-router-dom';
-import { BsFillBookmarkFill } from 'react-icons/bs';
+import { BsFillBookmarkFill, BsGoogle } from 'react-icons/bs';
 
- import {googleLogout} from '@react-oauth/google';
+import { googleLogout } from '@react-oauth/google';
+import { IoPersonCircleOutline } from 'react-icons/io5';
+import NotFound from './NotFound';
 
 function Profile() {
 
@@ -19,18 +20,28 @@ function Profile() {
   const offers = useStore((state: any) => state.offers);
 
   const userProfile = useStore((state: any) => state.userProfile);
+  const isGuest = useStore((state: any) => state.isGuest);
 
   const setLoggedin = useStore((state: any) => state.setLoggedin);
   const setUserProfile = useStore((state: any) => state.setUserProfile);
+  const isLoggedin = useStore((state: any) => state.isLoggedIn);
 
   const handleLogout = () => {
 
     setLoggedin(false);
     googleLogout();
-    setUserProfile({ id: '', username: '', password: null });
+
+    setUserProfile({
+      sub: '',
+      name: '',
+      given_name: '',
+      email: '',
+      signin_method: '',
+      email_verified: false,
+      picture: '',
+    });
 
     Toastify({
-
       text: 'Signing you out...',
       duration: 2000,
       gravity: 'bottom',
@@ -49,20 +60,36 @@ function Profile() {
     }).showToast();
 
     navigate('/Login');
+  }
 
+  if (!isLoggedin) {
+    return (
+      <NotFound />
+    )
   }
 
   return (
     <section className="Profile-container">
       <div className="profile-header">
-        <div className="profile-avatar">
-          <IoPersonCircle />
-        </div>
+        <img
+          src={userProfile.picture}
+          className="profile-avatar">
+        </img>
         <div className="profile-info">
           <h1 className="profile-username">
-            {userProfile.username}
+           Welcome back, {userProfile.name}
+          </h1>
+
+          <h1 className="profile-id">
+            {isGuest ?  <IoPersonCircleOutline/> : <BsGoogle /> }
+            {userProfile.signin_method} 
+          </h1>
+
+          <h1 className="profile-email">
+            <MdAlternateEmail /> {userProfile.email}
           </h1>
         </div>
+        
 
         <div className="profile-actions">
           <Button
@@ -108,7 +135,6 @@ function Profile() {
           </div>
         </div>
       </div>
-
     </section>
   )
 }

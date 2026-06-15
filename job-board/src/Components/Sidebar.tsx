@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 import { useState } from "react";
 import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
-import { BsBookmark, BsMoonFill, BsPerson } from "react-icons/bs";
+import { BsBookmark, BsMoonFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { PiSunFill } from "react-icons/pi";
 import { TbBlocks, TbBuildingSkyscraper } from "react-icons/tb";
@@ -24,7 +24,6 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
     const userProfile = useStore((state: any) => state.userProfile);
 
     const CollapseSidebar = () => {
-
         setSidebarCollapsed(prevState => !prevState);
         console.log(sidebarCollapsed);
     }
@@ -49,16 +48,12 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
             </div>
 
             <div className="profile-sidebar">
-                <div className="profile-pic">
-                    <BsPerson />
+                <div className="profile-pic"> 
+                    {isLoggedin ? <img src={userProfile.picture} /> : <MdAccountCircle />}
                 </div>
-                {isLoggedin ? <span className="username">
-                    {sidebarCollapsed ? <> </> : <>{userProfile.username}</>}
+                <span className="username">
+                    {sidebarCollapsed ? <>  </> : <> {userProfile.given_name}</>}
                 </span>
-                    :
-                    <>
-                    </>
-                }
             </div>
 
             <div className="sidebar-links">

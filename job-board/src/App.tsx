@@ -15,12 +15,10 @@ import Profile from './Components/Profile.tsx';
 import YourJobs from './Components/YourJobs.tsx';
 import MobileNav from './Components/MobileNav.tsx';
 
-import useStore from './State/ZustandStore.tsx';
 import Login from './Components/Login.tsx';
 import Signup from './Components/Signup.tsx';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
 
 function App() {
 
@@ -34,8 +32,6 @@ function App() {
   const toggleLight: React.MouseEventHandler<HTMLButtonElement> = () => {
     setLightOn(prev => !prev);
   };
-
-  const isLoggedin = useStore((state: any) => state.isLoggedIn);
 
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -63,11 +59,9 @@ function App() {
               <Signup />
 
               <Routes>
-                {isLoggedin ?
-                  <Route path='/Profile' element={<Profile />} />
-                  :
-                  <Route path='/Login' element={<Login />} />
-                }
+
+                <Route path='/Profile' element={<Profile />} />
+                <Route path='/Login' element={<Login />} />
 
                 <Route path='/YourJobs' element={<YourJobs />} />
                 <Route path='/' element={<Dashboard id={''} title={''} location={{

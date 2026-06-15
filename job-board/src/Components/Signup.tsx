@@ -1,7 +1,6 @@
 import { Button } from "@mantine/core";
 import { TbBuildingSkyscraper } from "react-icons/tb";
 import useStore from "../State/ZustandStore";
-import { IoPersonCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 function Signup() {
@@ -28,12 +27,13 @@ function Signup() {
                 {isLoggedIn ?
 
                     <div className="profile-topbar">
-                        <div className="profile-pic">
-                            <IoPersonCircleOutline />
-                        </div>
+                            <img
+                                src={userProfile.picture}
+                                className="profile-pic-topbar">
+                            </img>
 
                         <div className="username-topbar">
-                        {userProfile.username}
+                            {userProfile.name}
                         </div>
                     </div>
                     :

@@ -147,10 +147,6 @@ Button{
   justify-content: center;
 }
 
-Button svg{
-  margin-right: 10px;
-}
-
 /* Input Base Styles */
 input, textarea, select {
   font-family: inherit;

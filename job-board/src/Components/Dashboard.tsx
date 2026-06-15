@@ -384,6 +384,7 @@ function Dashboard({ }: Job) {
                   onChange={setActivePage}
                   mt="sm"
                   color="teal.7"
+                  className="pagination"
                 />
               </div>
             </div>

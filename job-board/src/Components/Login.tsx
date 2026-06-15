@@ -3,7 +3,6 @@ import { TbBuildingSkyscraper } from "react-icons/tb";
 
 import useStore from "../State/ZustandStore";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
-
 import { jwtDecode } from "jwt-decode";
 
 import Toastify from 'toastify-js';
@@ -15,18 +14,45 @@ function Login() {
     const setLoggedin = useStore((state: any) => state.setLoggedin);
     const setUserProfile = useStore((state: any) => state.setUserProfile);
 
+    async function getGuestData() {
+
+        const randomId = crypto.randomUUID();
+        const url = `https://api.dicebear.com/10.x/glyphs/svg?seed=${randomId}`;
+
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                return Error;
+            }
+
+            setUserProfile({
+                id: 0,
+                name: 'Guest',
+                signin_method: 'Guest Account',
+                email: 'Guest@guest.com',
+                password: null,
+                email_verified: 'false',
+                picture: url,
+            });
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+
+    }
+    getGuestData();
+
+
     const handleGuestAccount = () => {
 
         setLoggedin(true);
-        setUserProfile({
-            id: 0,
-            username: 'Guest',
-            password: null,
-        });
+
 
         Toastify({
 
-            text: 'Sucsessfully Logged in as guest - reloading...',
+            text: 'Sucsessfully Logged in as guest.',
             duration: 2000,
             gravity: 'bottom',
             position: 'right',
@@ -66,12 +92,17 @@ function Login() {
                             onSuccess={(credentialResponse: CredentialResponse) => {
                                 if (credentialResponse.credential) {
                                     const decoded = jwtDecode(credentialResponse.credential);
+
                                     console.log(decoded);
+
+                                    setUserProfile({
+                                        ...decoded,
+                                        signin_method: 'Signed in with google',
+                                    });
 
                                 } else {
                                     console.error('No credential returned');
                                 }
-
                                 setLoggedin(true);
                                 navigate("/Profile");
                             }}
