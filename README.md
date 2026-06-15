@@ -12,11 +12,11 @@ Project is in early stages of development - more screenshots to come.
 
 Main Page: 
 
-<img width="1917" height="916" alt="image" src="https://github.com/user-attachments/assets/40aad336-1fa1-4903-8373-dbb765486e2c" />
+<img width="1917" height="918" alt="image" src="https://github.com/user-attachments/assets/a9504d8c-5fe1-4ea8-bd28-0a60d3d689c7" />
 
 More results: 
+<img width="1915" height="916" alt="image" src="https://github.com/user-attachments/assets/11938bee-01e0-4b42-a76a-b18e8145481b" />
 
-<img width="1917" height="920" alt="image" src="https://github.com/user-attachments/assets/f76a2548-a717-4f2d-af04-5a5c551dabd1" />
 
 Filtering for Web development jobs, in the last 24 hours, that is remote: 
 
@@ -24,7 +24,7 @@ Filtering for Web development jobs, in the last 24 hours, that is remote:
 
 Your Jobs Page: 
 
-<img width="1916" height="917" alt="image" src="https://github.com/user-attachments/assets/b196b51d-0239-4aa2-ab48-cce2dd5f483d" />
+<img width="1917" height="916" alt="image" src="https://github.com/user-attachments/assets/6a7043b6-70f7-4ea5-bf9d-1c7f171c3ba1" />
 
 Grid View:
 
@@ -33,6 +33,9 @@ Grid View:
 Moving a job to another List:
 
 <img width="395" height="399" alt="image" src="https://github.com/user-attachments/assets/893862d2-89aa-4cea-874a-8a656a2f75a1" />
+
+Accounts Page as Guest:
+<img width="1917" height="920" alt="image" src="https://github.com/user-attachments/assets/bb1861ff-cc6c-44be-9f1e-3b98984f95b0" />
 
 Toast notification: 
 
