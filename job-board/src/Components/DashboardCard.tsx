@@ -65,9 +65,6 @@ function DashboardCard({ jobData }: CardProps) {
       console.log('Updated Row Data Returned:', data);
     }
 
-    console.log("👉 TARGETING TABLE ROW ID:", userProfile.id);
-    console.log("👉 TARGETING PAYLOAD DATA:", newApplied);
-
     Toastify({
 
       text: `Applied for ${jobData.title} at ${jobData.company?.display_name}.`,
@@ -86,7 +83,6 @@ function DashboardCard({ jobData }: CardProps) {
     }).showToast();
 
   }
-
 
   const AddSavedJobs = () => {
 
@@ -196,34 +192,34 @@ function DashboardCard({ jobData }: CardProps) {
           <div className="job-title">
             <div>
               <BsBriefcaseFill />
-              {jobData.title}
+              {jobData.title || 'Title not found'}
             </div>
           </div>
 
           <div className="job-top-details">
             <div className="job-company_name">
-              <BiBuilding /> {jobData.company?.display_name}
+              <BiBuilding /> {jobData.company?.display_name || 'N/A'}
             </div>
 
             <div className="job-company_name">
-              <FaChartLine /> £{jobData.salary_max}
+              <FaChartLine /> £{jobData.salary_max || 'N/A'}
             </div>
 
             <div className="job-company_name">
-              <FaHandshake /> {jobData?.contract_type}
+              <FaHandshake /> {jobData?.contract_type || 'N/A'}
             </div>
 
             <div className="job-location">
-              <FaLocationDot /> {jobData.location?.display_name}
+              <FaLocationDot /> {jobData.location?.display_name || 'N/A'}
             </div>
 
             <div className="job-created">
-              <BsFillClockFill /> {JobDate}
+              <BsFillClockFill /> {JobDate || 'N/A'}
             </div>
 
           </div>
           <div className='job-description'>
-            {jobData.description}
+            {jobData.description || 'Job Description not found - take a look at the role by pressing the Apply button below.'}
           </div>
 
           <div className="buttons-tray">
