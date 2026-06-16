@@ -45,10 +45,10 @@ Toast notification:
 🛠 Planned Features
 
     - user accounts system on the frontend via supabase.
-    - Abillity for users to add a note onto each applied, saved, interviewing and offer job. 
 
 ✔️ Completed Features
 
+    - Abillity for users to add a note onto each applied, saved, interviewing and offer job. 
     - Save and delete jobs from saved jobs tab.
     - save and delete jobs from applied jobs tab.
     - Baic UI and fetching Adzunas API.
