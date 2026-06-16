@@ -4,8 +4,6 @@ This web application features a jobs board using Adzuna's public API, and allows
 They'll be able to saved notes to each job as well as move a job saved, to interviewing and then to and offers tab. 
 User accounts are planned by implemeting Supabase.
 
-Note: This job board unfortunatly only works for the united kingdom currently.
-
 📷 Screenshots - Everything is subject to change including this UI
 
 Project is in early stages of development - more screenshots to come.
