@@ -53,6 +53,7 @@ Toast notification:
     - Ability to filter jobs by location, salary, date posted, experience, job title and whether a job is remote or not.
     - Column and Grid views for all results pages
     - Users can move a job between saved, interviewing and offers tabs.
+    - Users can export data as CSV, and view thier data in Excel.
 
 🛠 Technologies Used (so far)
 
