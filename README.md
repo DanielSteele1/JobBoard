@@ -63,9 +63,10 @@ Toast notification:
     Libraries: Zustand, Toastify.js, Mantine UI.
 
 📌 Status
-This project is a work in progress and will be fully deployed when a working version is completed. 
 
-Worth noting that becuase app is still in testing mode, users cannot currently sign up with google. This will be changed soon.
+    - This project is a work in progress and will be fully deployed when a working version is completed. 
+
+    - Worth noting that becuase app is still in testing mode, users cannot currently sign up with google. This will be changed soon.
 
 📫 Contact
 If you're interested in the project, feel free to connect or follow the development:
