@@ -6,7 +6,7 @@ User accounts are planned by implemeting Supabase.
 
 📷 Screenshots - Everything is subject to change including this UI
 
-Project is in it's final stages of development - testing and finanising features for deployment.
+Project is in it's final stages of development - testing and finalising features for deployment.
 
 Main Page: 
 
