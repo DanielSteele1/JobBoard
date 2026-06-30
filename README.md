@@ -42,7 +42,7 @@ Toast notification:
 
 🛠 Planned Features
 
-    - user accounts system on the frontend via supabase.
+    - app is now in a testing and refining phase
 
 ✔️ Completed Features
 
@@ -54,14 +54,18 @@ Toast notification:
     - Column and Grid views for all results pages
     - Users can move a job between saved, interviewing and offers tabs.
     - Users can export data as CSV, and view thier data in Excel.
+    - user accounts system on the frontend via supabase.
+
 
 🛠 Technologies Used (so far)
 
-    Frontend: React, TypeScript, React-router, Figma, Adzunas API.
+    Frontend: React, TypeScript, React-router, Figma, Adzunas API, Supabase Auth (with google), Supabase.
     Libraries: Zustand, Toastify.js, Mantine UI.
 
 📌 Status
-This project is a work in progress and will be fully deployed when a working version is completed.
+This project is a work in progress and will be fully deployed when a working version is completed. 
+
+Worth noting that becuase app is still in testing mode, users cannot currently sign up with google. This will be changed soon.
 
 📫 Contact
 If you're interested in the project, feel free to connect or follow the development:
