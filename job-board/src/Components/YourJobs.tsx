@@ -37,15 +37,15 @@ interface JobType {
 
 function YourJobs() {
 
-  const appliedJobs = useStore((state: any) => state.appliedJobs as JobType[]);
-  const savedJobs = useStore((state: any) => state.savedJobs as JobType[]);
+  const appliedJobs = useStore((state: any) => state.appliedJobs || [] as JobType[]);
+  const savedJobs = useStore((state: any) => state.savedJobs || [] as JobType[]);
   const setSavedJobs = useStore((state: any) => state.setSavedJobs);
 
-  const interviewingJobs = useStore((state: any) => state.interviewingJobs as JobType[]);
+  const interviewingJobs = useStore((state: any) => state.interviewingJobs || [] as JobType[]);
   const setInterviewingJobs = useStore((state: any) => state.setInterviewingJobs);
 
   const setOffers = useStore((state: any) => state.setOffers);
-  const offers = useStore((state: any) => state.offers as JobType[]);
+  const offers = useStore((state: any) => state.offers || [] as JobType[]);
 
   // tabs slection
   const [selectTabs, setSelectTabs] = useState('applied');
@@ -62,12 +62,24 @@ function YourJobs() {
 
   })
 
+  // in guest mode - these spread operaters crash the app
+
   // combine all arrays
   const data = [...appliedJobs, ...savedJobs, ...interviewingJobs, ...offers];
 
+  const headers = [
+
+    { label: "Title", key: "Title" },
+    { label: "Company", key: "Company" },
+    { label: "location", key: "Location" },
+    { label: "Pay", key: "Pay" },
+    { label: "Contract Type", key: "Contract_Type" },
+    { label: "Link", key: "Link" },
+  ]
+
   const csvData = data.map((job) => ({
 
-    title: job.title || 'N/A',
+    Title: job.title || 'N/A',
     Company: job.company?.display_name || 'N/A',
     Description: job.description || 'N/A',
     Pay: job.salary_min || 'N/A',
@@ -75,9 +87,6 @@ function YourJobs() {
     Location: job.location?.display_name || 'N/A',
     Link: job.redirect_url || 'N/A',
   }));
-
-  console.log(data);
-
 
   function AddCustomJob(e: React.FormEvent) {
     e.preventDefault();
@@ -172,7 +181,6 @@ function YourJobs() {
 
         <span> Want to track a job not found from this app? </span>
 
-
         <Button color="teal.7" onClick={toggle}> <BiPlus /> Add a custom job </Button>
 
       </div>
@@ -222,7 +230,8 @@ function YourJobs() {
               value={'applied'}
               onClick={() => setSelectTabs('applied')}
             >
-              📰 Applications {appliedJobs.length}
+              📰
+              <span> {appliedJobs.length} </span>
             </Button>
 
             <Button
@@ -231,7 +240,7 @@ function YourJobs() {
               onClick={() => setSelectTabs('saved')}
             >
               <BsFillBookmarkFill />
-              Bookmarks {savedJobs.length}
+              <span> {savedJobs.length} </span>
             </Button>
 
             <Button
@@ -239,14 +248,16 @@ function YourJobs() {
               value={'interviewing'}
               onClick={() => setSelectTabs('interviewing')}
             >
-              💬 Interviews {interviewingJobs.length}
+              💬
+              <span> {interviewingJobs.length} </span>
             </Button>
 
             <Button
               className="tabs-buttons"
               value={'offers'}
               onClick={() => setSelectTabs('offers')}>
-              🎉 Offers {offers.length}
+              🎉
+              <span> {offers.length} </span>
             </Button>
           </div>
         </div>
@@ -256,7 +267,7 @@ function YourJobs() {
 
           <Tooltip label="Export to CSV" position="top" color="teal.6" transitionProps={{ transition: 'fade', duration: 300 }}>
             <div>
-              <CSVLink data={csvData} filename={'my_jobs.csv'} className="">
+              <CSVLink data={csvData} filename={'my_jobs.csv'} headers={headers} className="">
                 <Button className="button-csv"
                   color="teal.7">
                   <CiExport />
@@ -329,7 +340,7 @@ function YourJobs() {
       }
       {
         selectTabs === 'applied' &&
-        <Applied isGrid={isGrid} />
+        <Applied isGrid={isGrid} handleDeleteJob={handleDeleteJob} />
       }
       {
         selectTabs === 'interviewing' &&

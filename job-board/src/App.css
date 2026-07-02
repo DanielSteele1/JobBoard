@@ -109,6 +109,7 @@ a {
   display: flex;
   height: fit-content;
   width: 200px;
+  margin: 15px;
 }
 
 .Navigation {
@@ -207,15 +208,15 @@ body {
 .Signup-container {
   display: flex;
   flex-direction: row;
-  width: 95%;
-  height: fit-content;
-  padding: 10px;
+  width: 100px;
+  height: 70px;
   justify-content: flex-end;
   align-items: center;
   position: sticky;
-  z-index: 9999999;
+  padding: 10px;
+  z-index: 9;
   top: 0;
-  left: 0;
+  left: 10000px;
 }
 
 .signup {
@@ -499,13 +500,24 @@ body {
   padding: 10px;
 }
 
-
 .your-jobs-title {
   display: flex;
-  flex-direction: row;
+  height: 130px;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   width: 100%;
+}
+
+.your-jobs-subtitle {
+  display: flex;
+  height: fit-content;
+  padding-top: 20px;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--text-color);
 }
 
 .heading {
@@ -539,7 +551,7 @@ body {
 }
 
 .button-grid,
-.button-csv{
+.button-csv {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -601,8 +613,9 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding-top: 15px;
   border-radius: 20px;
+  width: 200px;
   height: fit-content;
 }
 
@@ -815,6 +828,8 @@ body {
 .buttons-tray {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   margin-left: 10px;
 }
 
@@ -862,21 +877,47 @@ body {
   margin-right: 5px;
 }
 
-.job-title {
-  display: flex;
-  align-items: center;
+
+.job-top {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-title {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
   justify-content: space-between;
   font-size: 1.2rem;
-  padding: 10px;
+  width: 100%;
   color: var(--accent);
 }
 
-.job-title div {
-
-  display: inline-flex;
+.did-you-apply {
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  flex-direction: row;
+  padding: 10px;
+  height: 45px;
+  width: 100%;
+  margin: 10px;
+}
+
+.mantine-Checkbox-input {
+  border: 2px solid var(--text-color);
+  background-color: var(--background-surface) !important;
+  transition: all 0.2s ease;
+}
+
+.mantine-Checkbox-input:checked {
+  background-color: var(--accent) !important;
+}
+
+.mantine-Checkbox-label {
+  font-weight: 500 !important;
 }
 
 .job-title-isGrid {
@@ -886,7 +927,7 @@ body {
   width: 100%;
   padding: 10px;
   justify-content: center;
-  font-size: 1.0rem;
+  font-size: 1.2rem;
   padding: 10px;
   color: var(--accent);
 }
@@ -1312,6 +1353,7 @@ body {
 .buttons-filters button {
   background-color: var(--background-secondary);
   color: var(--text-color);
+  transition: 0.0s;
 }
 
 .buttons-filters button:hover {
@@ -1716,9 +1758,10 @@ body {
 
   .dashboard,
   .YourJobs-container,
-  .profile {
-    flex: 0 0 80%;
-    width: 80%;
+  .profile,
+  .history-container {
+    flex: 0 0 90%;
+    width: 90%;
     height: 100%;
     margin: 0 auto;
     margin-top: 50px;
@@ -1799,6 +1842,7 @@ body {
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
+    align-items: normal;
   }
 
   .buttons-tray button {
@@ -2025,12 +2069,42 @@ body {
     width: 100%;
     margin: 0 auto;
   }
+
+  .profile-topbar {
+    padding-top: 0px;
+  }
 }
 
 @media(min-width: 200px) and (max-width: 750px) {
 
+
+  .job-top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .job-title {
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+  }
+
+  .did-you-apply {
+    justify-content: flex-start;
+  }
+
   .dashboard-card {
     padding: 10px;
+  }
+
+  .profile-topbar {
+    padding-top: 0px;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .search-filters-container {
@@ -2064,20 +2138,22 @@ body {
   }
 
   .buttons-filters-mobile {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100px;
+    gap: 15px;
     width: 100%;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
   }
 
   .buttons-filters-mobile Button {
     width: 100%;
-    background-color: var(--background);
+    height: 45px;
+    background-color: var(--background-surface);
     transition: none;
+    font-size: 1.1rem;
     color: var(--text-color);
-    margin-top: 10px;
   }
 
   .buttons-filters-mobile button:hover {

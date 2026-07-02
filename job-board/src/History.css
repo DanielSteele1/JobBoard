@@ -1,0 +1,50 @@
+.history-container {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.history {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 100px;
+    flex-direction: column;
+}
+
+.history-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons-drawer{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+button-grid .svg{
+    color: white;
+}
+
+.history-subtitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    width: 70%;
+    height: 100px;
+}

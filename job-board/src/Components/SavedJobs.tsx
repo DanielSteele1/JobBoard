@@ -43,37 +43,28 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
     const offers = useStore((state: any) => state.offers as JobType[]);
     const setOffers = useStore((state: any) => state.setOffers);
 
+    const setAppliedJobs = useStore((state: any) => (state.setAppliedJobs));
+    const appliedJobs = useStore((state: any) => state.appliedJobs as JobType[]);
+
+    const updateJobStatus = useStore((state: any) => state.updateJobStatus);
+
     const handleStatusChange = (value: string | null, job: any) => {
         if (!value) return;
 
-        if (value === '📖 Bookmarks') {
+        if (value === '📰 Applied') {
 
-            Toastify({
+            setSavedJobs(savedJobs.filter(j => j.id !== job.id));
+            setAppliedJobs([...appliedJobs, job]);
 
-                text: 'Job is already Bookmarked',
-                duration: 2000,
-                gravity: 'bottom',
-                position: 'right',
-                stopOnFocus: true,
-                style: {
-                    display: 'flex',
-                    bacgkround: 'none !important',
-                    backgroundColor: "none !important",
-                    borderRadius: '15px',
-                    boxShadow: 'none !important',
-                    color: 'white',
-                    marginTop: '10px',
-                },
-
-            }).showToast();
-
-
+            updateJobStatus(job, value);
         }
 
         if (value === '💬 Interviewing') {
 
             setSavedJobs(savedJobs.filter(j => j.id !== job.id));
             setInterviewingJobs([...interviewingJobs, job]);
+
+            updateJobStatus(job, value);
 
             Toastify({
 
@@ -100,6 +91,8 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
             setSavedJobs(savedJobs.filter(j => j.id !== job.id));
             setOffers([...offers, job]);
 
+            updateJobStatus(job, value);
+
             Toastify({
 
                 text: 'Job moved to offers',
@@ -122,13 +115,14 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
     }
 
     return (
-
         <section className="Saved">
             <div className="your-jobs-title">
                 <div className="heading">
                     <RiBookmarkFill />
                     Bookmarked Jobs: {savedJobs.length}
                 </div>
+                <span className="your-jobs-subtitle"> You're Bookmarked jobs. You can move each to the interviewing or offers tabs, as each one progresses.  </span>
+
             </div>
 
             <div className={isGrid ? "savedJobs-grid" : "savedJobs"}>
@@ -147,7 +141,6 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                         </Link>
                     </div>
                 ) : (
-
 
                     savedJobs.map((job: JobType, index: number) => (
                         <div className={isGrid ? "appliedJob-grid" : "appiedJob"} key={index}>
@@ -172,7 +165,7 @@ function Saved({ isGrid, handleDeleteJob }: SavedProps) {
                                     <Select
                                         className="Status-select"
                                         placeholder="Move to..."
-                                        data={['📖 Bookmarks', '💬 Interviewing', '🎉 Offers']}
+                                        data={['📰 Applied', '💬 Interviewing', '🎉 Offers']}
                                         onChange={(value) => handleStatusChange(value, job)}
                                     ></Select>
                                 </div>

@@ -42,11 +42,15 @@ function Interviews({ isGrid }: SavedProps) {
     const offers = useStore((state: any) => state.offers as JobType[]);
     const setOffers = useStore((state: any) => state.setOffers);
 
+    const appliedJobs = useStore((state: any) => state.appliedJobs as JobType[]);
+    const setAppliedJobs = useStore((state: any) => (state.setAppliedJobs));
+
+
+    const updateJobStatus = useStore((state: any) => state.updateJobStatus);
 
     const handleDeleteJob = (index: number) => {
 
         setInterviewingJobs(interviewingJobs.filter((_: any, i: number) => i !== index));
-
 
         Toastify({
 
@@ -70,10 +74,21 @@ function Interviews({ isGrid }: SavedProps) {
 
     const handleStatusChange = (value: string | null, job: any) => {
 
+        if (value === '📰 Applied') {
+
+
+            setInterviewingJobs(savedJobs.filter(j => j.id !== job.id));
+            setAppliedJobs([...appliedJobs, job]);
+
+            updateJobStatus(job, value);
+        }
+
         if (value === '📖 Bookmarks') {
 
             setInterviewingJobs(interviewingJobs.filter(j => j.id !== job.id));
             setSavedJobs([...savedJobs, job]);
+
+            updateJobStatus(job, value);
 
             Toastify({
 
@@ -95,33 +110,13 @@ function Interviews({ isGrid }: SavedProps) {
             }).showToast();
         }
 
-        if (value === '💬 Interviewing') {
-
-            Toastify({
-
-                text: 'You already moved this job to this array',
-                duration: 2000,
-                gravity: 'bottom',
-                position: 'right',
-                stopOnFocus: true,
-                style: {
-                    display: 'flex',
-                    bacgkround: 'none !important',
-                    backgroundColor: "none !important",
-                    borderRadius: '15px',
-                    boxShadow: 'none !important',
-                    color: 'white',
-                    marginTop: '10px',
-                },
-
-            }).showToast();
-
-        }
-
         if (value === '🎉 Offers') {
 
             setInterviewingJobs(interviewingJobs.filter(j => j.id !== job.id));
             setOffers([...offers, job])
+
+            updateJobStatus(job, value);
+
 
             Toastify({
 
@@ -151,6 +146,7 @@ function Interviews({ isGrid }: SavedProps) {
                     💬
                     Your Interviews: {interviewingJobs.length}
                 </div>
+                <span className="your-jobs-subtitle"> The amount of interviews you've recieved / taken part in. </span>
             </div>
 
             <div className={isGrid ? "appliedJobs-grid" : "appliedJobs"}>
@@ -163,7 +159,7 @@ function Interviews({ isGrid }: SavedProps) {
                         <Link to="/">
                             <Button
                                 color="teal.7">
-                                <TbBlocks/>
+                                <TbBlocks />
                                 Go to Dashboard
                             </Button>
                         </Link>
@@ -193,7 +189,7 @@ function Interviews({ isGrid }: SavedProps) {
                                     <Select
                                         className="Status-select"
                                         placeholder="Move to..."
-                                        data={['📖 Bookmarks', '💬 Interviewing', '🎉 Offers']}
+                                        data={['📰 Applied', '📖 Bookmarks', '🎉 Offers']}
                                         onChange={(value) => handleStatusChange(value, job)}
                                     ></Select>
                                 </div>

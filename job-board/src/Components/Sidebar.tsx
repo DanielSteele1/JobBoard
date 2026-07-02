@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 import { useState } from "react";
 import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
-import { BsBookmark, BsMoonFill } from "react-icons/bs";
+import { BsBookmark, BsClock, BsMoonFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { PiSunFill } from "react-icons/pi";
 import { TbBlocks, TbBuildingSkyscraper } from "react-icons/tb";
@@ -23,9 +23,11 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
     const isLoggedin = useStore((state: any) => state.isLoggedIn);
     const userProfile = useStore((state: any) => state.userProfile);
 
+    const isGuest = useStore((state: any) => state.isGuest);
+
+
     const CollapseSidebar = () => {
         setSidebarCollapsed(prevState => !prevState);
-        console.log(sidebarCollapsed);
     }
 
     return (
@@ -48,8 +50,15 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
             </div>
 
             <div className="profile-sidebar">
-                <div className="profile-pic"> 
-                    {isLoggedin ? <img src={userProfile.picture} /> : <MdAccountCircle />}
+                <div className="profile-pic">
+                    {isLoggedin || isGuest ? <img onError={(e) => {
+
+                        e.currentTarget.src = `https://api.dicebear.com/10.x/glyphs/svg?seed`;
+
+                    }}
+                        src={userProfile.picture}
+                    /> : <MdAccountCircle />
+                    }
                 </div>
                 <span className="username">
                     {sidebarCollapsed ? <>  </> : <> {userProfile.given_name}</>}
@@ -58,14 +67,13 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
 
             <div className="sidebar-links">
 
-                {isLoggedin ?
+                {isLoggedin || isGuest ?
 
                     <Tooltip label="Profile" position="right" color="teal.7" transitionProps={{ transition: 'fade-right', duration: 300 }}>
                         <NavLink to="/Profile" className="sidebar-link">
 
                             <MdAccountCircle />
                             <span className={sidebarCollapsed ? "display-none" : ""}>Profile</span>
-
                         </NavLink>
                     </Tooltip>
                     :
@@ -87,7 +95,16 @@ function Sidebar({ isLightOn, toggleLight }: SidebarProps) {
                     </NavLink>
                 </Tooltip>
 
-                {isLoggedin ?
+                <Tooltip label="Job History" position="right" color="teal.7" transitionProps={{ transition: 'fade-right', duration: 300 }}>
+
+                    <NavLink to="/history" className="sidebar-link">
+                        <BsClock />
+                        <span className={sidebarCollapsed ? "display-none" : ""}> History  </span>
+                    </NavLink>
+                </Tooltip>
+
+                {isLoggedin || isGuest ?
+
                     <Tooltip label="Your Jobs" position="right" color="teal.7" transitionProps={{ transition: 'fade-right', duration: 300 }}>
 
                         <NavLink to="YourJobs" className="sidebar-link">

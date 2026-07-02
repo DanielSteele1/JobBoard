@@ -1,6 +1,6 @@
-import { Button, Skeleton } from "@mantine/core";
+import { Button, Checkbox, Skeleton } from "@mantine/core";
 import { BiBuilding } from "react-icons/bi";
-import { BsBookmark, BsBriefcaseFill, BsFillBookmarkFill, BsFillClockFill } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkFill, BsFillClockFill } from "react-icons/bs";
 import { FaChartLine, FaHandshake, FaLocationDot } from "react-icons/fa6";
 
 import Toastify from 'toastify-js';
@@ -40,8 +40,10 @@ function DashboardCard({ jobData }: CardProps) {
   const setSavedJobs = useStore((state: any) => state.setSavedJobs);
   const setAppliedJobs = useStore((state: any) => state.setAppliedJobs);
 
+  const history = useStore((state: any) => state.history);
+  const setHistory = useStore((state: any) => state.setHistory);
+
   const isAlreadySaved = savedJobs.some((job: any) => job.redirect_url === jobData.redirect_url);
-  const userProfile = useStore((state: any) => state.userProfile);
   const isLoggedIn = useStore((state: any) => state.isLoggedIn);
 
   // add a job + track applied jobs
@@ -49,20 +51,29 @@ function DashboardCard({ jobData }: CardProps) {
   const AddAppliedJobs = async () => {
 
     const newApplied = [...appliedJobs, jobData];
+
+    newApplied.sort((a, b) => {
+      return new Date(b.created).getTime() + new Date(a.created).getTime();
+    })
+
     setAppliedJobs(newApplied);
 
-    const { data, error, status } = await supabase
-      .from("Users")
-      .update({ applied_jobs: newApplied })
-      .eq("id", userProfile.id)
-      .select();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (error) {
-      console.log('Error:', error);
-    }
-    else {
-      console.log('Supabase Status Code:', status);
-      console.log('Updated Row Data Returned:', data);
+    if (user) {
+      const { error, status } = await supabase
+        .from("Users")
+        .update({ applied_jobs: newApplied })
+        .eq('id', user.id)
+        .select();
+
+      if (error) {
+        console.log('Error:', error);
+      }
+      else {
+        console.log('Supabase Status Code:', status);
+        console.log('Updated Row Data Returned:');
+      }
     }
 
     Toastify({
@@ -82,6 +93,12 @@ function DashboardCard({ jobData }: CardProps) {
 
     }).showToast();
 
+  }
+
+  const AddHistory = () => {
+
+    const newHistory = [...history, jobData];
+    setHistory(newHistory);
   }
 
   const AddSavedJobs = () => {
@@ -189,11 +206,20 @@ function DashboardCard({ jobData }: CardProps) {
         </div>
         :
         <div className="dashboard-card">
-          <div className="job-title">
-            <div>
-              <BsBriefcaseFill />
+          <div className="job-top">
+            <div className="job-title">
               {jobData.title || 'Title not found'}
             </div>
+
+            <div className="did-you-apply">
+              <Checkbox
+                color="teal.7"
+                label="Did you apply?"
+                onClick={AddAppliedJobs}
+              >
+              </Checkbox>
+            </div>
+
           </div>
 
           <div className="job-top-details">
@@ -228,10 +254,10 @@ function DashboardCard({ jobData }: CardProps) {
                 className="apply-button"
                 color="teal.7"
                 value="appliedJob"
-                onClick={AddAppliedJobs}>
+                onClick={AddHistory}>
 
                 <a href={jobData?.redirect_url} target="_blank" rel="noopener noreferrer">
-                  <FaNewspaper /> Apply
+                  <FaNewspaper /> View Listing
                 </a>
               </Button>
             </div>
@@ -252,7 +278,9 @@ function DashboardCard({ jobData }: CardProps) {
                 </a>
               </Button>
             </div>
+
           </div>
+
         </div>
 
       }

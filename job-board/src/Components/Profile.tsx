@@ -1,5 +1,4 @@
 
-import { Button } from '@mantine/core';
 import "../Profile.css";
 import { MdAlternateEmail, MdLogout } from 'react-icons/md';
 import Toastify from 'toastify-js';
@@ -11,24 +10,33 @@ import { googleLogout } from '@react-oauth/google';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import NotFound from './NotFound';
 
+import { Button } from '@mantine/core';
+
 function Profile() {
 
   const navigate = useNavigate();
-  const appliedJobs = useStore((state: any) => state.appliedJobs);
-  const savedJobs = useStore((state: any) => state.savedJobs);
-  const interviewingJobs = useStore((state: any) => state.interviewingJobs);
-  const offers = useStore((state: any) => state.offers);
+  const appliedJobs = useStore((state: any) => state.appliedJobs || [] );
+  const savedJobs = useStore((state: any) => state.savedJobs || []);
+  const interviewingJobs = useStore((state: any) => state.interviewingJobs || []);
+  const offers = useStore((state: any) => state.offers || []);
 
   const userProfile = useStore((state: any) => state.userProfile);
-  const isGuest = useStore((state: any) => state.isGuest);
 
   const setLoggedin = useStore((state: any) => state.setLoggedin);
   const setUserProfile = useStore((state: any) => state.setUserProfile);
+
   const isLoggedin = useStore((state: any) => state.isLoggedIn);
+
+  const isGuest = useStore((state: any) => state.isGuest);
+  const setGuest = useStore((state: any) => state.setGuest);
+
+  // if the user selected guest, wipe localstorage, and start fresh
+  // users will be notified of this change when they logout as guest.
 
   const handleLogout = () => {
 
     setLoggedin(false);
+    setGuest(false);
     googleLogout();
 
     setUserProfile({
@@ -62,7 +70,7 @@ function Profile() {
     navigate('/Login');
   }
 
-  if (!isLoggedin) {
+  if (!isLoggedin && !isGuest) {
     return (
       <NotFound />
     )
@@ -73,23 +81,29 @@ function Profile() {
       <div className="profile-header">
         <img
           src={userProfile.picture}
-          className="profile-avatar">
+          className="profile-avatar"
+          onError={(e) => {
+
+            // if an error occurs while fetching a pfp (like error 429, get a dicebear randomly generated placehoder instead)
+            e.currentTarget.src = `https://api.dicebear.com/10.x/glyphs/svg?seed`;
+
+          }}>
         </img>
         <div className="profile-info">
           <h1 className="profile-username">
-           Welcome back, {userProfile.name}
+            Welcome back, {userProfile.name}
           </h1>
 
           <h1 className="profile-id">
-            {isGuest ?  <IoPersonCircleOutline/> : <BsGoogle /> }
-            {userProfile.signin_method} 
+            {isGuest ? <IoPersonCircleOutline /> : <BsGoogle />}
+            {userProfile.signin_method}
           </h1>
 
           <h1 className="profile-email">
             <MdAlternateEmail /> {userProfile.email}
           </h1>
         </div>
-        
+
 
         <div className="profile-actions">
           <Button

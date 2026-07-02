@@ -2,13 +2,15 @@
 
 import { FaChartLine, FaLocationDot, FaNewspaper } from 'react-icons/fa6';
 import useStore from '../State/ZustandStore.tsx';
-import { BiBuilding } from 'react-icons/bi';
-import { Button } from '@mantine/core';
+import { BiBuilding, BiTrash } from 'react-icons/bi';
+import { Button, Select } from '@mantine/core';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { TbBlocks } from 'react-icons/tb';
+import Toastify from 'toastify-js';
 
 interface JobType {
+    id: number;
     title: string;
     description: string;
     company: {
@@ -27,10 +29,110 @@ interface JobType {
 
 interface SavedProps {
     isGrid: boolean;
+    handleDeleteJob: (index: number) => void;
+
 }
 
-function Applied({ isGrid }: SavedProps) {
+function Applied({ isGrid, handleDeleteJob }: SavedProps) {
     const appliedJobs = useStore((state: any) => state.appliedJobs as JobType[]);
+    const savedJobs = useStore((state: any) => state.savedJobs as JobType[]);
+    const interviewingJobs = useStore((state: any) => state.interviewingJobs as JobType[]);
+    const offers = useStore((state: any) => state.offers as JobType[]);
+
+    const setAppliedJobs = useStore((state: any) => (state.setAppliedJobs));
+    const setSavedJobs = useStore((state: any) => state.setSavedJobs);
+    const setInterviewingJobs = useStore((state: any) => state.setInterviewingJobs);
+    const setOffers = useStore((state: any) => state.setOffers);
+
+    const updateJobStatus = useStore((state: any) => state.updateJobStatus);
+
+    const handleStatusChange = async (value: string | null, job: any) => {
+        if (!value) return;
+
+        if (value === '📖 Bookmarks') {
+
+
+            setAppliedJobs(appliedJobs.filter(j => j.id !== job.id));
+            setSavedJobs([...savedJobs, job]);
+
+            updateJobStatus(job, value);
+
+
+            Toastify({
+
+                text: 'Job is already Bookmarked',
+                duration: 2000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+                style: {
+                    display: 'flex',
+                    bacgkround: 'none !important',
+                    backgroundColor: "none !important",
+                    borderRadius: '15px',
+                    boxShadow: 'none !important',
+                    color: 'white',
+                    marginTop: '10px',
+                },
+
+            }).showToast();
+
+        }
+
+        if (value === '💬 Interviewing') {
+
+            setAppliedJobs(appliedJobs.filter(j => j.id !== job.id));
+            setInterviewingJobs([...interviewingJobs, job]);
+
+            updateJobStatus(job, value);
+
+            Toastify({
+
+                text: 'Job moved to Interviewing',
+                duration: 2000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+                style: {
+                    display: 'flex',
+                    bacgkround: 'none !important',
+                    backgroundColor: "none !important",
+                    borderRadius: '15px',
+                    boxShadow: 'none !important',
+                    color: 'white',
+                    marginTop: '10px',
+                },
+
+            }).showToast();
+
+        }
+
+        if (value === '🎉 Offers') {
+            setAppliedJobs(appliedJobs.filter(j => j.id !== job.id));
+            setOffers([...offers, job]);
+
+            updateJobStatus(job, value);
+
+            Toastify({
+
+                text: 'Job moved to offers',
+                duration: 2000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+                style: {
+                    display: 'flex',
+                    bacgkround: 'none !important',
+                    backgroundColor: "none !important",
+                    borderRadius: '15px',
+                    boxShadow: 'none !important',
+                    color: 'white',
+                    marginTop: '10px',
+                },
+
+            }).showToast();
+        }
+    }
 
     return (
 
@@ -40,6 +142,7 @@ function Applied({ isGrid }: SavedProps) {
                     <FaNewspaper />
                     Your Applied Jobs: {appliedJobs.length}
                 </div>
+                <span className="your-jobs-subtitle"> Applied Jobs are purely for your tracking and cannot be moved to other lists. </span>
             </div>
 
             <div className={isGrid ? "appliedJobs-grid" : "appliedJobs"}>
@@ -53,7 +156,7 @@ function Applied({ isGrid }: SavedProps) {
                         <Link to="/">
                             <Button
                                 color="teal.7">
-                               <TbBlocks /> Go to Dashboard
+                                <TbBlocks /> Go to Dashboard
                             </Button>
                         </Link>
                     </div>
@@ -76,6 +179,14 @@ function Applied({ isGrid }: SavedProps) {
                                 style={{ width: '100%' }}>
 
                                 <div className="job-title">{job.title}
+
+
+                                    <Select
+                                        className="Status-select"
+                                        placeholder="Move to..."
+                                        data={['📖 Bookmarks', '💬 Interviewing', '🎉 Offers']}
+                                        onChange={(value) => handleStatusChange(value, job)}
+                                    ></Select>
                                 </div>
 
                                 <div className={isGrid ? "jobs-top-details-grid" : "job-top-details"}>
@@ -91,6 +202,9 @@ function Applied({ isGrid }: SavedProps) {
                                 </div>
 
                                 <div className={isGrid ? "buttons-tray-grid" : "buttons-tray"}>
+
+
+
                                     <Button
                                         className="button"
                                         style={{ marginTop: '8px' }}
@@ -99,6 +213,16 @@ function Applied({ isGrid }: SavedProps) {
                                         <a href={job?.redirect_url} target="_blank" rel="noopener noreferrer">
                                             <FaNewspaper /> View Listing
                                         </a>
+                                    </Button>
+
+                                    <Button
+                                        className="button"
+                                        onClick={() => handleDeleteJob(index)}
+                                        style={{ marginTop: '8px' }}
+                                        color={'teal.7'}
+                                    >
+                                        <BiTrash />
+                                        Delete
                                     </Button>
                                 </div>
                             </motion.div>

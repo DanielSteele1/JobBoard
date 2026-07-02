@@ -44,6 +44,11 @@ function Offers({ isGrid }: SavedProps) {
     const setOffers = useStore((state: any) => state.setOffers);
 
 
+    const setAppliedJobs = useStore((state: any) => (state.setAppliedJobs));
+    const appliedJobs = useStore((state: any) => state.appliedJobs as JobType[]);
+
+    const updateJobStatus = useStore((state: any) => state.updateJobStatus);
+
     const handleDeleteJob = (index: number) => {
 
         setOffers(offers.filter((_: any, i: number) => i !== index));
@@ -66,21 +71,34 @@ function Offers({ isGrid }: SavedProps) {
             },
 
         }).showToast();
-
     }
 
     const handleStatusChange = (value: string | null, job: any) => {
 
+        if (value === '📰 Applied') {
+
+
+            setOffers(offers.filter(j => j.id !== job.id));
+            setAppliedJobs([...appliedJobs, job]);
+
+            updateJobStatus(job, value);
+        }
 
         if (value === '📖 Bookmarks') {
 
             setOffers(offers.filter(j => j.id !== job.id));
             setSavedJobs([...savedJobs, job]);
+
+            updateJobStatus(job, value);
+
         }
 
         if (value === '💬 Interviewing') {
             setOffers(offers.filter(j => j.id !== job.id));
             setInterviewingJobs([...interviewingJobs, job]);
+
+            updateJobStatus(job, value);
+
 
             Toastify({
 
@@ -123,9 +141,7 @@ function Offers({ isGrid }: SavedProps) {
 
 
             }).showToast();
-
         }
-
     }
 
     return (
@@ -135,6 +151,8 @@ function Offers({ isGrid }: SavedProps) {
                 <div className="heading">
                     🎉 Offers: {offers.length}
                 </div>
+                <span className="your-jobs-subtitle"> The amount of offers you've recieved. well done! </span>
+
             </div>
 
             <div className={isGrid ? "appliedJobs-grid" : "appliedJobs"}>
@@ -148,7 +166,7 @@ function Offers({ isGrid }: SavedProps) {
                         <Link to="/">
                             <Button
                                 color="teal.7">
-                               <TbBlocks/>
+                                <TbBlocks />
                                 Go to Dashboard
                             </Button>
                         </Link>
@@ -178,7 +196,7 @@ function Offers({ isGrid }: SavedProps) {
                                     <Select
                                         className="Status-select"
                                         placeholder="Move to..."
-                                        data={['📖 Bookmarks', '💬 Interviewing', '🎉 Offers']}
+                                        data={['📰 Applied', '📖 Bookmarks', '💬 Interviewing']}
                                         onChange={(value) => handleStatusChange(value, job)}
                                     ></Select>
                                 </div>

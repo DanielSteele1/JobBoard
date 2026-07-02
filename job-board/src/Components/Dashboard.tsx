@@ -185,7 +185,6 @@ function Dashboard({ }: Job) {
       });
 
       const GenericResults = await GenericResponse.json();
-      console.log(GenericResults);
       setSearchResult(GenericResults);
 
     };
@@ -214,8 +213,7 @@ function Dashboard({ }: Job) {
 
     const results = await response.json();
     setSearchResult(results);
-    console.log(results);
-
+    
     return () => clearTimeout(timer);
   };
 
