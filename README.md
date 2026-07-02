@@ -4,11 +4,9 @@ This web application features a jobs board using Adzuna's public API, and allows
 They'll be able to saved notes to each job as well as move a job saved, to interviewing and then to and offers tab. 
 User accounts are planned by implemeting Supabase.
 
-Note: This job board unfortunatly only works for the united kingdom currently.
-
 📷 Screenshots - Everything is subject to change including this UI
 
-Project is in early stages of development - more screenshots to come.
+Project is in it's final stages of development - testing and finalising features for deployment.
 
 Main Page: 
 
@@ -44,25 +42,31 @@ Toast notification:
 
 🛠 Planned Features
 
-    - user accounts system on the frontend via supabase.
-    - Abillity for users to add a note onto each applied, saved, interviewing and offer job. 
+    - app is now in a testing and refining phase
 
 ✔️ Completed Features
 
+    - Abillity for users to add a note onto each applied, saved, interviewing and offer job. 
     - Save and delete jobs from saved jobs tab.
     - save and delete jobs from applied jobs tab.
     - Baic UI and fetching Adzunas API.
     - Ability to filter jobs by location, salary, date posted, experience, job title and whether a job is remote or not.
     - Column and Grid views for all results pages
     - Users can move a job between saved, interviewing and offers tabs.
+    - Users can export data as CSV, and view thier data in Excel.
+    - user accounts system on the frontend via supabase.
+
 
 🛠 Technologies Used (so far)
 
-    Frontend: React, TypeScript, React-router, Figma, Adzunas API.
+    Frontend: React, TypeScript, React-router, Figma, Adzunas API, Supabase Auth (with google), Supabase.
     Libraries: Zustand, Toastify.js, Mantine UI.
 
 📌 Status
-This project is a work in progress and will be fully deployed when a working version is completed.
+
+    - This project is a work in progress and will be fully deployed when a working version is completed. 
+
+    - Worth noting that becuase app is still in testing mode, users cannot currently sign up with google. This will be changed soon.
 
 📫 Contact
 If you're interested in the project, feel free to connect or follow the development:
